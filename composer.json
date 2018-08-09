@@ -1,6 +1,6 @@
 {
     "name": "cesargb/laravel-cascade-delete",
-    "description": "Cascading deletes for Eloquent models that implement polymorphic relations",
+    "description": "Cascading eliminations implemented in polymorphic relationships for the Laravel apps",
     "keywords": [
         "laravel",
         "elocuent",
