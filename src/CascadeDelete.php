@@ -18,13 +18,13 @@ trait CascadeDelete
      */
     protected static function bootCascadeDelete()
     {
-        static::deleted(function($model) {
+        static::deleted(function ($model) {
             foreach ($model->getCascadeDeleteMorphValid() as $method) {
                 $relation = $model->$method();
 
                 if ($relation instanceof MorphMany) {
                     $relation->delete();
-                } else if ($relation instanceof MorphToMany) {
+                } elseif ($relation instanceof MorphToMany) {
                     $relation->detach();
                 }
             }
@@ -34,13 +34,14 @@ trait CascadeDelete
     /**
      * Fetch the valids cascading morphs deletes for this model.
      *
-     * @return array
      * @throws \Exception
+     *
+     * @return array
      */
     protected function getCascadeDeleteMorphValid()
     {
         return array_filter($this->getCascadeDeleteMorph(), function ($method) {
-            if (! method_exists($this, $method)) {
+            if (!method_exists($this, $method)) {
                 throw new Exception(sprintf(
                     'The class %s not have the method %s',
                     self::class,
@@ -52,7 +53,7 @@ trait CascadeDelete
 
             $relation = $this->$method();
 
-            if (! $relation instanceof MorphMany && ! $relation instanceof MorphToMany) {
+            if (!$relation instanceof MorphMany && !$relation instanceof MorphToMany) {
                 throw new Exception(sprintf(
                     'The relation %s must return an object of type %s or %s',
                     $method,
@@ -74,6 +75,6 @@ trait CascadeDelete
      */
     protected function getCascadeDeleteMorph()
     {
-        return (array)($this->cascadeDeleteMorph ?? []);
+        return (array) ($this->cascadeDeleteMorph ?? []);
     }
 }

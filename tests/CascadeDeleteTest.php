@@ -3,14 +3,11 @@
 namespace Tests;
 
 use Exception;
-use Tests\TestCase;
-use Tests\Models\Tag;
-use Tests\Models\Photo;
-use Tests\Models\Video;
-use Tests\Models\Option;
+use Illuminate\Support\Facades\DB;
 use Tests\Models\BadModel;
 use Tests\Models\BadModel2;
-use Illuminate\Support\Facades\DB;
+use Tests\Models\Photo;
+use Tests\Models\Video;
 
 class CascadeDeleteTest extends TestCase
 {
@@ -28,7 +25,7 @@ class CascadeDeleteTest extends TestCase
             0,
             DB::table('options')->where([
                 'optionable_type' => Photo::class,
-                'optionable_id' => $photo1->id,
+                'optionable_id'   => $photo1->id,
             ])->count()
         );
 
@@ -36,7 +33,7 @@ class CascadeDeleteTest extends TestCase
             count($photo2->options),
             DB::table('options')->where([
                 'optionable_type' => Photo::class,
-                'optionable_id' => $photo2->id,
+                'optionable_id'   => $photo2->id,
             ])->count()
         );
     }
@@ -55,7 +52,7 @@ class CascadeDeleteTest extends TestCase
             0,
             DB::table('taggables')->where([
                 'taggable_type' => Video::class,
-                'taggable_id' => $video1->id,
+                'taggable_id'   => $video1->id,
             ])->count()
         );
 
@@ -63,24 +60,24 @@ class CascadeDeleteTest extends TestCase
             count($video2->tags),
             DB::table('taggables')->where([
                 'taggable_type' => Video::class,
-                'taggable_id' => $video2->id,
+                'taggable_id'   => $video2->id,
             ])->count()
         );
     }
 
     /**
-      * @expectedException          Exception
-      * @expectedExceptionMessage   The class Tests\Models\BadModel not have the method bad_method
-      */
+     * @expectedException          Exception
+     * @expectedExceptionMessage   The class Tests\Models\BadModel not have the method bad_method
+     */
     public function test_get_exception_if_method_not_exists()
     {
         BadModel::first()->delete();
     }
 
     /**
-      * @expectedException          Exception
-      * @expectedExceptionMessage   The relation bad_method must return an object of type Illuminate\Database\Eloquent\Relations\MorphMany or Illuminate\Database\Eloquent\Relations\MorphToMany
-      */
+     * @expectedException          Exception
+     * @expectedExceptionMessage   The relation bad_method must return an object of type Illuminate\Database\Eloquent\Relations\MorphMany or Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
     public function test_get_exception_if_method_not_return_relation_morph()
     {
         BadModel2::first()->delete();

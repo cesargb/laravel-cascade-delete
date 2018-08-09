@@ -2,9 +2,8 @@
 
 namespace Tests\Models;
 
-use Tests\Models\Option;
-use Illuminate\Database\Eloquent\Model;
 use Cesargb\Database\Support\CascadeDelete;
+use Illuminate\Database\Eloquent\Model;
 
 class Photo extends Model
 {
@@ -12,7 +11,7 @@ class Photo extends Model
 
     protected $cascadeDeleteMorph = ['options'];
 
-    protected $fillable = [ 'name' ];
+    protected $fillable = ['name'];
 
     public function options()
     {

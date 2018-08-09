@@ -2,9 +2,8 @@
 
 namespace Tests\Models;
 
-use Tests\Models\Tag;
-use Illuminate\Database\Eloquent\Model;
 use Cesargb\Database\Support\CascadeDelete;
+use Illuminate\Database\Eloquent\Model;
 
 class Video extends Model
 {
@@ -12,7 +11,7 @@ class Video extends Model
 
     protected $cascadeDeleteMorph = 'tags';
 
-    protected $fillable = [ 'name' ];
+    protected $fillable = ['name'];
 
     public function tags()
     {
