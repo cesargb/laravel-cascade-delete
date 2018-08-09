@@ -1,6 +1,9 @@
-# Cascading morph relations deletes for the Laravel PHP Framework
+[![Build Status](https://travis-ci.org/cesargb/laravel-cascade-delete.svg?branch=master)](https://travis-ci.org/cesargb/laravel-cascade-delete)
+[![StyleCI](https://github.styleci.io/repos/144183283/shield?branch=master)](https://github.styleci.io/repos/144183283)
 
-This package add a trait for use in Elocuents Models that permit deletes in
+# Cascading eliminations implemented in polymorphic relationships for the Laravel apps
+
+This package permit add a trait for use in Elocuents Models that deletes in
 cascade the Polymorphic Relations (`MorphMany` or `MorphToMany`).
 
 ## Instalation
@@ -43,3 +46,7 @@ class Video extends Model
 
 Now you can delete an `App\Video` record, and any associated `App\Tag` records
 will be deleted.
+
+## Contributing
+
+Any contributions are welcome.
