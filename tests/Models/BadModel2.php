@@ -2,8 +2,8 @@
 
 namespace Tests\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Cesargb\Database\Support\CascadeDelete;
+use Illuminate\Database\Eloquent\Model;
 
 class BadModel2 extends Model
 {
@@ -13,6 +13,5 @@ class BadModel2 extends Model
 
     public function bad_method()
     {
-        return null;
     }
 }

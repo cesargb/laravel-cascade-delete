@@ -2,14 +2,14 @@
 
 namespace Tests;
 
-use Tests\Models\Tag;
-use Tests\Models\Photo;
-use Tests\Models\Video;
-use Tests\Models\Option;
-use Tests\Models\BadModel;
-use Tests\Models\BadModel2;
 use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Tests\Models\BadModel;
+use Tests\Models\BadModel2;
+use Tests\Models\Option;
+use Tests\Models\Photo;
+use Tests\Models\Tag;
+use Tests\Models\Video;
 
 abstract class TestCase extends Orchestra
 {
@@ -28,7 +28,8 @@ abstract class TestCase extends Orchestra
     /**
      * Define environment setup.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param \Illuminate\Foundation\Application $app
+     *
      * @return void
      */
     protected function getEnvironmentSetUp($app)
