@@ -13,6 +13,5 @@ class BadModel2 extends Model
 
     public function bad_method()
     {
-        return null;
     }
 }

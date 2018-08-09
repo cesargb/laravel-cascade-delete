@@ -18,13 +18,13 @@ trait CascadeDelete
      */
     protected static function bootCascadeDelete()
     {
-        static::deleted(function($model) {
+        static::deleted(function ($model) {
             foreach ($model->getCascadeDeleteMorphValid() as $method) {
                 $relation = $model->$method();
 
                 if ($relation instanceof MorphMany) {
                     $relation->delete();
-                } else if ($relation instanceof MorphToMany) {
+                } elseif ($relation instanceof MorphToMany) {
                     $relation->detach();
                 }
             }
@@ -74,6 +74,6 @@ trait CascadeDelete
      */
     protected function getCascadeDeleteMorph()
     {
-        return (array)($this->cascadeDeleteMorph ?? []);
+        return (array) ($this->cascadeDeleteMorph ?? []);
     }
 }
