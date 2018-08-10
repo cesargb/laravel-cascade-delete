@@ -2,7 +2,7 @@
 
 namespace Cesargb\Database\Support;
 
-use Exception;
+use LogicException;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
@@ -13,8 +13,6 @@ trait CascadeDelete
      *
      * Listen for the deleted event of a model, and run
      * the delete operation for morphs configured relationship methods.
-     *
-     * @throws \LogicException
      */
     protected static function bootCascadeDelete()
     {
@@ -35,13 +33,13 @@ trait CascadeDelete
      * Fetch the valids cascading morphs deletes for this model.
      *
      * @return array
-     * @throws \Exception
+     * @throws \LogicException
      */
     protected function getCascadeDeleteMorphValid()
     {
         return array_filter($this->getCascadeDeleteMorph(), function ($method) {
             if (! method_exists($this, $method)) {
-                throw new Exception(sprintf(
+                throw new LogicException(sprintf(
                     'The class %s not have the method %s',
                     self::class,
                     $method
@@ -53,7 +51,7 @@ trait CascadeDelete
             $relation = $this->$method();
 
             if (! $relation instanceof MorphMany && ! $relation instanceof MorphToMany) {
-                throw new Exception(sprintf(
+                throw new LogicException(sprintf(
                     'The relation %s must return an object of type %s or %s',
                     $method,
                     MorphMany::class,
