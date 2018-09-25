@@ -114,7 +114,6 @@ trait CascadeDelete
                             ->whereNotExists(function ($query) use ($parentObject, $parent, $relation_table, $relation_type, $relation_id) {
                                 $query->select(DB::raw(1))
                                         ->from($parentObject->getTable())
-                                        ->where($relation_type, $parent)
                                         ->whereRaw(
                                             $parentObject->getTable().'.'.$parentObject->getKeyName().' = '.$relation_table.'.'.$relation_id
                                         );
