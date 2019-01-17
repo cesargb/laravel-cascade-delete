@@ -87,23 +87,17 @@ trait CascadeDelete
                 $relation_type = $relation->getMorphType();
 
                 $relation_id = $relation->getForeignKeyName();
-
-                $parents = DB::table($relation_table)
-                                ->groupBy($relation_type)
-                                ->pluck($relation_type);
             } elseif ($relation instanceof MorphToMany) {
                 $relation_table = $relation->getTable();
 
                 $relation_type = $relation->getMorphType();
 
                 $relation_id = $relation->getForeignPivotKeyName();
-
-                $parents = DB::table($relation_table)
-                                ->groupBy($relation_type)
-                                ->pluck($relation_type);
-            } else {
-                $parents = [];
             }
+
+            $parents = DB::table($relation_table)
+                            ->groupBy($relation_type)
+                            ->pluck($relation_type);
 
             foreach ($parents as $parent) {
                 if (class_exists($parent)) {
@@ -111,7 +105,12 @@ trait CascadeDelete
 
                     DB::table($relation_table)
                             ->where($relation_type, $parent)
-                            ->whereNotExists(function ($query) use ($parentObject, $parent, $relation_table, $relation_type, $relation_id) {
+                            ->whereNotExists(function ($query) use (
+                                $parentObject,
+                                $relation_table,
+                                $relation_type,
+                                $relation_id
+                            ) {
                                 $query->select(DB::raw(1))
                                         ->from($parentObject->getTable())
                                         ->whereRaw(

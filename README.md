@@ -28,6 +28,7 @@ Use the trait `Cesargb\Database\Support\CascadeDelete` in your Elocuent Model an
 namespace App;
 
 use App\Tag;
+use App\Option;
 use Illuminate\Database\Eloquent\Model;
 use Cesargb\Database\Support\CascadeDelete;
 
@@ -35,17 +36,40 @@ class Video extends Model
 {
     use CascadeDelete;
 
-    protected $cascadeDeleteMorph = ['tags'];
+    protected $cascadeDeleteMorph = ['tags', 'options'];
 
     public function tags()
     {
         return $this->morphToMany(Tag::class, 'taggable');
     }
+
+    public function options()
+    {
+        return $this->morphMany(Option::class, 'optionable');
+    }
 }
 ```
 
-Now you can delete an `App\Video` record, and any associated `App\Tag` records
-will be deleted.
+Now you can delete an `App\Video` record, and any associated `App\Tag` and
+`App\Options` records will be deleted.
+
+## Delete Residuals
+
+If you bulk delete a model with morphological relationships, you will have
+residual data that has not been deleted.
+
+To clean this waste you have the method `deleteMorphResidual`
+
+Sample:
+
+```php
+Video::query()->delete();
+
+$video = new Video;
+
+$video->deleteMorphResidual();
+```
+
 
 ## Contributing
 
