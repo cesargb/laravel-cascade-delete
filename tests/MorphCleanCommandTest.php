@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Artisan;
 
 class MorphCleanCommandTest extends TestCase
 {
-    public function test_command()
+    public function command()
     {
         $totalOptions = DB::table('options')->count();
         $totalTags = DB::table('taggables')->count();
