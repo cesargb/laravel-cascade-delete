@@ -125,7 +125,7 @@ class CascadeDeleteResidualTest extends TestCase
         );
     }
 
-    public function test_it_can_delete_al_relations_if_dont_need_clean()
+    public function test_it_can_delete_all_relations_if_dont_need_clean()
     {
         $totalOptions = DB::table('options')->count();
         $totalTags = DB::table('taggables')->count();
@@ -142,7 +142,7 @@ class CascadeDeleteResidualTest extends TestCase
         $this->assertEquals($totalTags, DB::table('tags')->count());
     }
 
-    public function test_it_can_delete_al_relations()
+    public function test_it_can_delete_all_relations()
     {
         $totalOptions = DB::table('options')->count();
         $totalTags = DB::table('taggables')->count();
