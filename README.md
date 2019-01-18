@@ -69,7 +69,14 @@ $video = new Video;
 
 $video->deleteMorphResidual();
 ```
+### Command to remove all residuals
 
+You can use Artisan command `morph:clean` to remove all residuals data from all
+your Moldes that used the `Cesargb\Database\Support\CascadeDelete` trait.
+
+```php
+php artisan morph:clean
+```
 
 ## Contributing
 
