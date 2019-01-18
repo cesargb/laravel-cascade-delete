@@ -12,8 +12,8 @@ class MorphCleanCommandTest extends TestCase
     public function test_command()
     {
         $this->assertTrue(true);
-        
-        /*$totalOptions = DB::table('options')->count();
+
+        $totalOptions = DB::table('options')->count();
         $totalTags = DB::table('taggables')->count();
 
         $deleteOptions = Photo::first()->options()->count();
@@ -32,6 +32,6 @@ class MorphCleanCommandTest extends TestCase
         $this->assertEquals(
             $totalTags - $deleteTags,
             DB::table('taggables')->count()
-        );*/
+        );
     }
 }

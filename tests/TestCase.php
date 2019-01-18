@@ -9,6 +9,7 @@ use Tests\Models\Option;
 use Tests\Models\BadModel;
 use Tests\Models\BadModel2;
 use Illuminate\Database\Schema\Blueprint;
+use Cesargb\Database\Support\CascadeDeleteServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
@@ -23,6 +24,18 @@ abstract class TestCase extends Orchestra
         $this->getEnvironmentSetUp($this->app);
 
         $this->setUpDatabase($this->app);
+    }
+
+    /**
+      * @param \Illuminate\Foundation\Application $app
+      *
+      * @return array
+      */
+    protected function getPackageProviders($app)
+    {
+        return [
+            CascadeDeleteServiceProvider::class,
+        ];
     }
 
     /**
