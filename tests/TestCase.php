@@ -10,6 +10,7 @@ use Tests\Models\BadModel;
 use Tests\Models\BadModel2;
 use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Cesargb\Database\Support\CascadeDeleteServiceProvider;
 
 abstract class TestCase extends Orchestra
 {
@@ -23,6 +24,18 @@ abstract class TestCase extends Orchestra
         $this->getEnvironmentSetUp($this->app);
 
         $this->setUpDatabase($this->app);
+    }
+
+    /**
+     * @param \Illuminate\Foundation\Application $app
+     *
+     * @return array
+     */
+    protected function getPackageProviders($app)
+    {
+        return [
+            CascadeDeleteServiceProvider::class,
+        ];
     }
 
     /**
@@ -96,6 +109,8 @@ abstract class TestCase extends Orchestra
 
         $tag1 = Tag::create(['name' => 'tag1']);
         $tag2 = Tag::create(['name' => 'tag2']);
+        $tag3 = Tag::create(['name' => 'tag3']);
+        $tag4 = Tag::create(['name' => 'tag4']);
 
         $video = Video::create(['name' => 'video1']);
 
@@ -103,7 +118,7 @@ abstract class TestCase extends Orchestra
 
         $video = Video::create(['name' => 'video2']);
 
-        $video->tags()->attach(2);
+        $video->tags()->attach([2, 3]);
 
         $app['db']->connection()->getSchemaBuilder()->create('bad_models', function (Blueprint $table) {
             $table->increments('id');

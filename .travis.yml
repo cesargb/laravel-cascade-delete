@@ -4,6 +4,7 @@ php:
   - 7.0
   - 7.1
   - 7.2
+  - 7.3
 
 env:
   matrix:
@@ -14,7 +15,8 @@ matrix:
   exclude:
   - php: 7.2
     env: COMPOSER_FLAGS="--prefer-lowest"
-
+  - php: 7.3
+    env: COMPOSER_FLAGS="--prefer-lowest"
 
 before_script:
   - travis_retry composer self-update
