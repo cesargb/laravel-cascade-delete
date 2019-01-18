@@ -19,7 +19,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^6.0|^7.0",
-        "orchestra/testbench": "^3.5.5"
+        "orchestra/testbench": "^3.5.5",
+        "friendsofphp/php-cs-fixer": "^2.14"
     },
     "autoload": {
         "psr-4": {
@@ -32,7 +33,8 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit --colors=always"
+        "test": "vendor/bin/phpunit --colors=always",
+        "fix": "vendor/bin/php-cs-fixer fix"
     },
     "license": "MIT",
     "authors": [

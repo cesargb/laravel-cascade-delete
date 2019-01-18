@@ -3,12 +3,12 @@
 namespace Tests;
 
 use LogicException;
-use Cesargb\Database\Support\CascadeDelete;
 use Tests\Models\Photo;
 use Tests\Models\Video;
 use Tests\Models\BadModel;
 use Tests\Models\BadModel2;
 use Illuminate\Support\Facades\DB;
+use Cesargb\Database\Support\CascadeDelete;
 
 class CascadeDeleteResidualTest extends TestCase
 {
@@ -46,7 +46,8 @@ class CascadeDeleteResidualTest extends TestCase
 
         $totalOptions = DB::table('options')->count();
 
-        Photo::query()->delete();;
+        Photo::query()->delete();
+        ;
 
         $this->assertEquals(
             $totalOptions,
@@ -86,7 +87,6 @@ class CascadeDeleteResidualTest extends TestCase
             count($photo2->options),
             DB::table('options')->count()
         );
-
     }
 
     public function test_it_can_delete_relations_with_morph_to_many()

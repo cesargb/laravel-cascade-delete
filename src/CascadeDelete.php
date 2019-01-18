@@ -33,8 +33,8 @@ trait CascadeDelete
     /**
      * Fetch the valids cascading morphs deletes for this model.
      *
-     * @return array
      * @throws \LogicException
+     * @return array
      */
     protected function getCascadeDeleteMorphValid()
     {
@@ -123,7 +123,6 @@ trait CascadeDelete
                             ->delete();
                 }
             }
-
         }
     }
 }

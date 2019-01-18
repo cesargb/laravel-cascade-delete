@@ -9,8 +9,8 @@ use Tests\Models\Option;
 use Tests\Models\BadModel;
 use Tests\Models\BadModel2;
 use Illuminate\Database\Schema\Blueprint;
-use Cesargb\Database\Support\CascadeDeleteServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Cesargb\Database\Support\CascadeDeleteServiceProvider;
 
 abstract class TestCase extends Orchestra
 {
@@ -27,10 +27,10 @@ abstract class TestCase extends Orchestra
     }
 
     /**
-      * @param \Illuminate\Foundation\Application $app
-      *
-      * @return array
-      */
+     * @param \Illuminate\Foundation\Application $app
+     *
+     * @return array
+     */
     protected function getPackageProviders($app)
     {
         return [
