@@ -3,7 +3,6 @@
 namespace Cesargb\Database\Support;
 
 use Illuminate\Support\ServiceProvider;
-use Cesargb\Database\Support\MorphCleanCommand;
 
 class CascadeDeleteServiceProvider extends ServiceProvider
 {

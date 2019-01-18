@@ -2,7 +2,6 @@
 
 namespace Tests;
 
-use LogicException;
 use Tests\Models\Photo;
 use Tests\Models\Video;
 use Tests\Models\BadModel;

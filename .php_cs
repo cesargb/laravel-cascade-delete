@@ -15,7 +15,7 @@ return Config::create()
         '@PSR2' => true,
         'array_syntax' => ['syntax' => 'short'],
         'ordered_imports' => ['sort_algorithm' => 'length'],
-        'no_unused_imports' => false,
+        'no_unused_imports' => true,
         'no_useless_else' => true,
         'no_useless_return' => true,
         'no_superfluous_elseif' => true,
