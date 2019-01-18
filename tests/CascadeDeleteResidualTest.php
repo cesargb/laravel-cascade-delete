@@ -46,7 +46,6 @@ class CascadeDeleteResidualTest extends TestCase
         $totalOptions = DB::table('options')->count();
 
         Photo::query()->delete();
-        ;
 
         $this->assertEquals(
             $totalOptions,
