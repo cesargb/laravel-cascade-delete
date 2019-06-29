@@ -105,7 +105,6 @@ abstract class TestCase extends Orchestra
             $table->morphs('taggable');
         });
 
-
         $app['db']->connection()->getSchemaBuilder()->create('bad_models', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
