@@ -4,9 +4,9 @@ namespace Cesargb\Database\Support;
 
 use LogicException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 trait CascadeDelete
 {
@@ -24,9 +24,9 @@ trait CascadeDelete
 
                 if ($relation instanceof MorphOne) {
                     $relation->delete();
-                } else if ($relation instanceof MorphMany) {
+                } elseif ($relation instanceof MorphMany) {
                     $relation->delete();
-                } else if ($relation instanceof MorphToMany) {
+                } elseif ($relation instanceof MorphToMany) {
                     $relation->detach();
                 }
             }
@@ -55,7 +55,6 @@ trait CascadeDelete
             $relation = $this->$method();
 
             if (! $relation instanceof MorphMany && ! $relation instanceof MorphToMany && ! $relation instanceof MorphOne) {
-
                 throw new LogicException(sprintf(
                     'The relation %s must return an object of type %s or %s',
                     $method,

@@ -12,7 +12,6 @@ use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Cesargb\Database\Support\CascadeDeleteServiceProvider;
 
-
 abstract class TestCase extends Orchestra
 {
     /**
