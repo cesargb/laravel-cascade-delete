@@ -6,6 +6,7 @@ use LogicException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 trait CascadeDelete
 {
@@ -21,9 +22,11 @@ trait CascadeDelete
             foreach ($model->getCascadeDeleteMorphValid() as $method) {
                 $relation = $model->$method();
 
-                if ($relation instanceof MorphMany) {
+                if ($relation instanceof MorphOne) {
                     $relation->delete();
-                } elseif ($relation instanceof MorphToMany) {
+                } else if ($relation instanceof MorphMany) {
+                    $relation->delete();
+                } else if ($relation instanceof MorphToMany) {
                     $relation->detach();
                 }
             }
@@ -51,7 +54,8 @@ trait CascadeDelete
 
             $relation = $this->$method();
 
-            if (! $relation instanceof MorphMany && ! $relation instanceof MorphToMany) {
+            if (! $relation instanceof MorphMany && ! $relation instanceof MorphToMany && ! $relation instanceof MorphOne) {
+
                 throw new LogicException(sprintf(
                     'The relation %s must return an object of type %s or %s',
                     $method,
@@ -81,7 +85,7 @@ trait CascadeDelete
         foreach ($this->getCascadeDeleteMorphValid() as $method) {
             $relation = $this->$method();
 
-            if ($relation instanceof MorphMany) {
+            if ($relation instanceof MorphOne || $relation instanceof MorphMany) {
                 $relation_table = $relation->getRelated()->getTable();
 
                 $relation_type = $relation->getMorphType();

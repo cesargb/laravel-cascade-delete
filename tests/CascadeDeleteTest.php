@@ -14,6 +14,8 @@ class CascadeDeleteTest extends TestCase
      */
     public function test_get_exception_if_method_not_exists()
     {
+        BadModel::create();
+
         BadModel::first()->delete();
     }
 
@@ -23,6 +25,8 @@ class CascadeDeleteTest extends TestCase
      */
     public function test_get_exception_if_method_not_return_relation_morph()
     {
+        BadModel2::create();
+
         BadModel2::first()->delete();
     }
 }
