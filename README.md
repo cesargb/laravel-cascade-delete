@@ -4,7 +4,7 @@
 # Cascading eliminations implemented in polymorphic relationships for the Laravel apps
 
 This package permit add a trait for use in Elocuents Models that deletes in
-cascade the Polymorphic Relations (`MorphMany` or `MorphToMany`).
+cascade the Polymorphic Relations (`MorphOne`, `MorphMany` or `MorphToMany`).
 
 ## Instalation
 
@@ -28,6 +28,7 @@ Use the trait `Cesargb\Database\Support\CascadeDelete` in your Elocuent Model an
 namespace App;
 
 use App\Tag;
+use App\Image;
 use App\Option;
 use Illuminate\Database\Eloquent\Model;
 use Cesargb\Database\Support\CascadeDelete;
@@ -36,21 +37,26 @@ class Video extends Model
 {
     use CascadeDelete;
 
-    protected $cascadeDeleteMorph = ['tags', 'options'];
+    protected $cascadeDeleteMorph = ['image', 'tags', 'options'];
 
-    public function tags()
+    public function image()
     {
-        return $this->morphToMany(Tag::class, 'taggable');
+        return $this->morphOne(Image::class, 'imageable');
     }
 
     public function options()
     {
         return $this->morphMany(Option::class, 'optionable');
     }
+
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
 }
 ```
 
-Now you can delete an `App\Video` record, and any associated `App\Tag` and
+Now you can delete an `App\Video` record, and any associated `App\Image`, `App\Tag` and
 `App\Options` records will be deleted.
 
 ## Delete Residuals
