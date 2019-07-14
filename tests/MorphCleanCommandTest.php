@@ -55,7 +55,7 @@ class MorphCleanCommandTest extends TestCase
         );
     }
 
-    public function test_command_delete_morph_to_manyn()
+    public function test_command_delete_morph_to_many()
     {
         $totalTags = DB::table('taggables')->count();
 
