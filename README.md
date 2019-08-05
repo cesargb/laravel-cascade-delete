@@ -6,7 +6,7 @@
 This package permit add a trait for use in Elocuents Models that deletes in
 cascade the Polymorphic Relations (`MorphOne`, `MorphMany` or `MorphToMany`).
 
-## Instalation
+## Installation
 
 This package can be used in Laravel 5.5 or higher.
 
