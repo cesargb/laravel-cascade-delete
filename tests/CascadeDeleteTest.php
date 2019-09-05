@@ -8,23 +8,23 @@ use Tests\Models\BadModel2;
 
 class CascadeDeleteTest extends TestCase
 {
-    /**
-     * @expectedException          LogicException
-     * @expectedExceptionMessage   The class Tests\Models\BadModel not have the method bad_method
-     */
     public function test_get_exception_if_method_not_exists()
     {
+        $this->expectException(LogicException::class);
+
+        $this->expectExceptionMessage('The class Tests\Models\BadModel not have the method bad_method');
+
         BadModel::create();
 
         BadModel::first()->delete();
     }
 
-    /**
-     * @expectedException          LogicException
-     * @expectedExceptionMessage   The relation bad_method must return an object of type Illuminate\Database\Eloquent\Relations\MorphMany or Illuminate\Database\Eloquent\Relations\MorphToMany
-     */
     public function test_get_exception_if_method_not_return_relation_morph()
     {
+        $this->expectException(LogicException::class);
+
+        $this->expectExceptionMessage('The relation bad_method must return an object of type Illuminate\Database\Eloquent\Relations\MorphMany or Illuminate\Database\Eloquent\Relations\MorphToMany');
+
         BadModel2::create();
 
         BadModel2::first()->delete();
