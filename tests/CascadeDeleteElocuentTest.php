@@ -2,13 +2,13 @@
 
 namespace Tests;
 
+use Illuminate\Support\Facades\DB;
+use Tests\Models\Image;
+use Tests\Models\Option;
+use Tests\Models\Photo;
 use Tests\Models\Tag;
 use Tests\Models\User;
-use Tests\Models\Image;
-use Tests\Models\Photo;
 use Tests\Models\Video;
-use Tests\Models\Option;
-use Illuminate\Support\Facades\DB;
 
 class CascadeDeleteElocuentTest extends TestCase
 {

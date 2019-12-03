@@ -2,12 +2,12 @@
 
 namespace Tests;
 
-use Tests\Models\User;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 use Tests\Models\Image;
 use Tests\Models\Photo;
+use Tests\Models\User;
 use Tests\Models\Video;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Artisan;
 
 class MorphCleanCommandTest extends TestCase
 {
