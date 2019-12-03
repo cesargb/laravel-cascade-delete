@@ -2,15 +2,15 @@
 
 namespace Tests;
 
-use Tests\Models\Tag;
-use Tests\Models\User;
-use Tests\Models\Image;
-use Tests\Models\Photo;
-use Tests\Models\Video;
-use Tests\Models\Option;
+use Cesargb\Database\Support\CascadeDeleteServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Cesargb\Database\Support\CascadeDeleteServiceProvider;
+use Tests\Models\Image;
+use Tests\Models\Option;
+use Tests\Models\Photo;
+use Tests\Models\Tag;
+use Tests\Models\User;
+use Tests\Models\Video;
 
 abstract class TestCase extends Orchestra
 {

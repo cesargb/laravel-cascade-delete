@@ -2,16 +2,16 @@
 
 namespace Tests;
 
-use Tests\Models\Tag;
-use Tests\Models\User;
-use Tests\Models\Image;
-use Tests\Models\Photo;
-use Tests\Models\Video;
-use Tests\Models\Option;
+use Cesargb\Database\Support\CascadeDelete;
+use Illuminate\Support\Facades\DB;
 use Tests\Models\BadModel;
 use Tests\Models\BadModel2;
-use Illuminate\Support\Facades\DB;
-use Cesargb\Database\Support\CascadeDelete;
+use Tests\Models\Image;
+use Tests\Models\Option;
+use Tests\Models\Photo;
+use Tests\Models\Tag;
+use Tests\Models\User;
+use Tests\Models\Video;
 
 class CascadeDeleteResidualTest extends TestCase
 {

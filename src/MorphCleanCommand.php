@@ -2,8 +2,8 @@
 
 namespace Cesargb\Database\Support;
 
-use LogicException;
 use Illuminate\Console\Command;
+use LogicException;
 
 class MorphCleanCommand extends Command
 {
