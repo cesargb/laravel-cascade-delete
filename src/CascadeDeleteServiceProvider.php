@@ -2,6 +2,7 @@
 
 namespace Cesargb\Database\Support;
 
+use Cesargb\Database\Support\Commands\MorphCleanCommand;
 use Illuminate\Support\ServiceProvider;
 
 class CascadeDeleteServiceProvider extends ServiceProvider
@@ -18,14 +19,5 @@ class CascadeDeleteServiceProvider extends ServiceProvider
                 MorphCleanCommand::class,
             ]);
         }
-    }
-
-    /**
-     * Register the application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
     }
 }

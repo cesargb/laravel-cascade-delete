@@ -2,6 +2,7 @@
 
 namespace Cesargb\Database\Support;
 
+use Cesargb\Database\Support\Helpers\Helper;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
@@ -19,12 +20,10 @@ trait CascadeDelete
     protected static function bootCascadeDelete()
     {
         static::deleted(function ($model) {
-            foreach ($model->getCascadeDeleteMorphValid() as $method) {
-                $relation = $model->$method();
+            foreach ($model->getCascadeDeleteMorph() as $methodName) {
+                $relation = $model->$methodName();
 
-                if ($relation instanceof MorphOne) {
-                    $relation->delete();
-                } elseif ($relation instanceof MorphMany) {
+                if ($relation instanceof MorphOne || $relation instanceof MorphMany) {
                     $relation->delete();
                 } elseif ($relation instanceof MorphToMany) {
                     $relation->detach();
@@ -33,55 +32,9 @@ trait CascadeDelete
         });
     }
 
-    /**
-     * Fetch the valids cascading morphs deletes for this model.
-     *
-     * @throws \LogicException
-     * @return array
-     */
-    protected function getCascadeDeleteMorphValid()
-    {
-        return array_filter($this->getCascadeDeleteMorph(), function ($method) {
-            if (! method_exists($this, $method)) {
-                throw new LogicException(sprintf(
-                    'The class %s not have the method %s',
-                    self::class,
-                    $method
-                ));
-
-                return false;
-            }
-
-            $relation = $this->$method();
-
-            if (! $relation instanceof MorphMany && ! $relation instanceof MorphToMany && ! $relation instanceof MorphOne) {
-                throw new LogicException(sprintf(
-                    'The relation %s must return an object of type %s or %s',
-                    $method,
-                    MorphMany::class,
-                    MorphToMany::class
-                ));
-
-                return false;
-            }
-
-            return true;
-        });
-    }
-
-    /**
-     * Fetch the defined cascading morph deletes for this model.
-     *
-     * @return array
-     */
-    protected function getCascadeDeleteMorph()
-    {
-        return (array) ($this->cascadeDeleteMorph ?? []);
-    }
-
     public function deleteMorphResidual()
     {
-        foreach ($this->getCascadeDeleteMorphValid() as $method) {
+        foreach ($this->getCascadeDeleteMorph() as $method) {
             $relation = $this->$method();
 
             if ($relation instanceof MorphOne || $relation instanceof MorphMany) {
@@ -111,7 +64,6 @@ trait CascadeDelete
                             ->whereNotExists(function ($query) use (
                                 $parentObject,
                                 $relation_table,
-                                $relation_type,
                                 $relation_id
                             ) {
                                 $query->select(DB::raw(1))
@@ -127,5 +79,22 @@ trait CascadeDelete
                 }
             }
         }
+    }
+
+    /**
+     * Fetch the defined cascading morph deletes for this model.
+     *
+     * @throws \LogicException
+     * @return array
+     */
+    protected function getCascadeDeleteMorph()
+    {
+        $methodsToDelete = (array) ($this->cascadeDeleteMorph ?? []);
+
+        return array_filter($methodsToDelete, function ($methodName) {
+            Helper::methodReturnedMorphRelation($this, $methodName);
+
+            return true;
+        });
     }
 }

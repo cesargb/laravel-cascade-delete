@@ -3,6 +3,7 @@
 namespace Tests;
 
 use Cesargb\Database\Support\CascadeDelete;
+use Cesargb\Database\Support\Helpers\Helper;
 use Illuminate\Support\Facades\DB;
 use Tests\Models\BadModel;
 use Tests\Models\BadModel2;
@@ -179,11 +180,9 @@ class CascadeDeleteResidualTest extends TestCase
         $totalOptions = DB::table('options')->count();
         $totalTags = DB::table('taggables')->count();
 
-        foreach (get_declared_classes() as $class) {
-            if (array_key_exists(CascadeDelete::class, class_uses($class))) {
-                if ($class != BadModel::class && $class != BadModel2::class) {
-                    (new $class)->deleteMorphResidual();
-                }
+        foreach (Helper::getClassWithCascadeDeleteTrait() as $class) {
+            if ($class != BadModel::class && $class != BadModel2::class) {
+                (new $class)->deleteMorphResidual();
             }
         }
 
@@ -205,11 +204,9 @@ class CascadeDeleteResidualTest extends TestCase
         Photo::first()->delete();
         Video::first()->delete();
 
-        foreach (get_declared_classes() as $class) {
-            if (array_key_exists(CascadeDelete::class, class_uses($class))) {
-                if ($class != BadModel::class && $class != BadModel2::class) {
-                    (new $class)->deleteMorphResidual();
-                }
+        foreach (Helper::getClassWithCascadeDeleteTrait() as $class) {
+            if ($class != BadModel::class && $class != BadModel2::class) {
+                (new $class)->deleteMorphResidual();
             }
         }
 

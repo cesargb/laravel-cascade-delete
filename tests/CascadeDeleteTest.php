@@ -12,21 +12,21 @@ class CascadeDeleteTest extends TestCase
     {
         $this->expectException(LogicException::class);
 
-        $this->expectExceptionMessage('The class Tests\Models\BadModel not have the method bad_method');
+        $this->expectExceptionCode(10);
 
-        BadModel::create();
+        BadModel::create()->delete();
 
-        BadModel::first()->delete();
+        // BadModel::first()->delete();
     }
 
     public function test_get_exception_if_method_not_return_relation_morph()
     {
         $this->expectException(LogicException::class);
 
-        $this->expectExceptionMessage('The relation bad_method must return an object of type Illuminate\Database\Eloquent\Relations\MorphMany or Illuminate\Database\Eloquent\Relations\MorphToMany');
+        $this->expectExceptionCode(20);
 
-        BadModel2::create();
+        BadModel2::create()->delete();
 
-        BadModel2::first()->delete();
+        //BadModel2::first()->delete();
     }
 }

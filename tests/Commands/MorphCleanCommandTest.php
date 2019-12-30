@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Commands;
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
@@ -8,6 +8,7 @@ use Tests\Models\Image;
 use Tests\Models\Photo;
 use Tests\Models\User;
 use Tests\Models\Video;
+use Tests\TestCase;
 
 class MorphCleanCommandTest extends TestCase
 {
