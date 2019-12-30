@@ -1,7 +1,7 @@
 <?php
 
-use PhpCsFixer\Finder;
 use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
 
 $finder = Finder::create()
     ->exclude('build')
@@ -14,7 +14,7 @@ return Config::create()
     ->setRules([
         '@PSR2' => true,
         'array_syntax' => ['syntax' => 'short'],
-        'ordered_imports' => ['sort_algorithm' => 'length'],
+        'ordered_imports' => ['sort_algorithm' => 'sort'],
         'no_unused_imports' => true,
         'no_useless_else' => true,
         'no_useless_return' => true,
