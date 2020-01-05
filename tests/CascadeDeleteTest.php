@@ -39,5 +39,4 @@ class CascadeDeleteTest extends TestCase
 
         $this->assertEquals(1, Image::count());
     }
-
 }

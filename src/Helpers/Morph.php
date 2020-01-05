@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class Morph
 {
     /**
-     * Get the classes that use the trait CascadeDelete
+     * Get the classes that use the trait CascadeDelete.
      *
      * @return \Illuminate\Database\Eloquent\Model[]
      */
@@ -24,9 +24,8 @@ class Morph
         );
     }
 
-
     /**
-     * Delete polymorphic relationships of the single records from Model
+     * Delete polymorphic relationships of the single records from Model.
      *
      * @param \Illuminate\Database\Eloquent\Model $model
      * @return void
@@ -54,10 +53,10 @@ class Morph
     }
 
     /**
-     * Clean residual polymorphic relationships from a Model
+     * Clean residual polymorphic relationships from a Model.
      *
      * @param \Illuminate\Database\Eloquent\Model $model
-     * @return integer Num rows was deleted
+     * @return int Num rows was deleted
      */
     public static function cleanResidualMorphRelationsFromModel($model)
     {
@@ -85,12 +84,12 @@ class Morph
     }
 
     /**
-     * Clean residual for a Table
+     * Clean residual for a Table.
      *
      * @param string $table      Table with morph relation
      * @param string $fieldType  Field defined for Morph Type
      * @param string $fieldId    Field defined for Morph Id
-     * @return integer Num rows was deleted
+     * @return int Num rows was deleted
      */
     protected static function cleanResidual($table, $fieldType, $fieldId)
     {
@@ -126,7 +125,7 @@ class Morph
     }
 
     /**
-     * Get the classes names that use the trait CascadeDelete
+     * Get the classes names that use the trait CascadeDelete.
      *
      * @return array
      */
@@ -144,7 +143,7 @@ class Morph
     }
 
     /**
-     * Fetch polymorphic relationships from a Model
+     * Fetch polymorphic relationships from a Model.
      *
      * @param \Illuminate\Database\Eloquent\Model $model
      * @return array
@@ -165,11 +164,11 @@ class Morph
     }
 
     /**
-     * Verify if method of a Model return a polymorphic relationship
+     * Verify if method of a Model return a polymorphic relationship.
      *
      * @param \Illuminate\Database\Eloquent\Model  $model
      * @param string                               $methodName
-     * @return boolean
+     * @return bool
      */
     protected static function methodReturnedMorphRelation($model, $methodName)
     {
@@ -179,14 +178,13 @@ class Morph
     }
 
     /**
-     * Verify if a object is a instance of a polymorphic relationship
+     * Verify if a object is a instance of a polymorphic relationship.
      *
      * @param mixed $relation
-     * @return boolean
+     * @return bool
      */
     protected static function isMorphRelation($relation)
     {
         return $relation instanceof MorphOneOrMany || $relation instanceof MorphToMany;
     }
-
 }
