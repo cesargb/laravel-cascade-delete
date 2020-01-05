@@ -20,7 +20,7 @@ trait CascadeDelete
     }
 
     /**
-     * Fetch methods name than must return a morph relation
+     * Fetch methods name than must return a morph relation.
      *
      * @return string[]
      */
@@ -31,9 +31,9 @@ trait CascadeDelete
 
     /**
      * Clean residual morph relation from a model. Return number
-     * of deleted rows
+     * of deleted rows.
      *
-     * @return integer
+     * @return int
      */
     public function deleteMorphResidual()
     {
