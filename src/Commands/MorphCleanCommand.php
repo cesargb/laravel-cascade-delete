@@ -2,9 +2,8 @@
 
 namespace Cesargb\Database\Support\Commands;
 
-use Cesargb\Database\Support\Helpers\Helper;
+use Cesargb\Database\Support\Helpers\Morph;
 use Illuminate\Console\Command;
-use LogicException;
 
 class MorphCleanCommand extends Command
 {
@@ -14,13 +13,15 @@ class MorphCleanCommand extends Command
 
     public function handle()
     {
-        foreach (Helper::getClassWithCascadeDeleteTrait() as $className) {
-            try {
-                (new $className)->deleteMorphResidual();
+        foreach (Morph::getModelsWithCascadeDeleteTrait() as $model) {
+            $numRowsDeleted = $model->deleteMorphResidual();
 
-                $this->info(sprintf('Cleaned class %s', $className));
-            } catch (LogicException $e) {
-                $this->error($e->getMessage());
+            if ($numRowsDeleted > 0) {
+                $this->info(sprintf(
+                    'Model %s: %d rows deleted.',
+                    get_class($model),
+                    $numRowsDeleted
+                ));
             }
         }
     }

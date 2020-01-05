@@ -1,32 +1,43 @@
 <?php
 
-namespace Tests;
+namespace Tests\Helpers;
 
-use LogicException;
-use Tests\Models\BadModel;
-use Tests\Models\BadModel2;
+use Tests\Models\Image;
+use Tests\Models\User;
+use Tests\TestCase;
 
 class CascadeDeleteTest extends TestCase
 {
-    public function test_get_exception_if_method_not_exists()
+    public function testBootCascadeDelete()
     {
-        $this->expectException(LogicException::class);
+        factory(User::class, 2)
+            ->create()
+            ->each(function ($user) {
+                $user->image()->save(factory(Image::class)->make());
+            });
 
-        $this->expectExceptionCode(10);
+        $this->assertEquals(2, Image::count());
 
-        BadModel::create()->delete();
+        User::first()->delete();
 
-        // BadModel::first()->delete();
+        $this->assertEquals(1, Image::count());
     }
 
-    public function test_get_exception_if_method_not_return_relation_morph()
+    public function testDeleteMorphResidual()
     {
-        $this->expectException(LogicException::class);
+        factory(User::class, 2)
+            ->create()
+            ->each(function ($user) {
+                $user->image()->save(factory(Image::class)->make());
+            });
 
-        $this->expectExceptionCode(20);
+        $this->assertEquals(2, Image::count());
 
-        BadModel2::create()->delete();
+        User::where('id', 1)->delete();
 
-        //BadModel2::first()->delete();
+        (new User)->deleteMorphResidual();
+
+        $this->assertEquals(1, Image::count());
     }
+
 }

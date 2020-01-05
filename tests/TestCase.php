@@ -4,13 +4,8 @@ namespace Tests;
 
 use Cesargb\Database\Support\CascadeDeleteServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Tests\Models\Image;
-use Tests\Models\Option;
-use Tests\Models\Photo;
-use Tests\Models\Tag;
-use Tests\Models\User;
-use Tests\Models\Video;
 
 abstract class TestCase extends Orchestra
 {
@@ -21,11 +16,11 @@ abstract class TestCase extends Orchestra
     {
         parent::setUp();
 
+        $this->withFactories(__DIR__.'/databases/factories');
+
         $this->getEnvironmentSetUp($this->app);
 
         $this->setUpDatabase($this->app);
-
-        $this->generateFactory();
     }
 
     /**
@@ -64,6 +59,8 @@ abstract class TestCase extends Orchestra
      */
     protected function setUpDatabase($app)
     {
+        Schema::enableForeignKeyConstraints();
+
         $app['db']->connection()->getSchemaBuilder()->create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
@@ -71,6 +68,7 @@ abstract class TestCase extends Orchestra
         });
 
         $app['db']->connection()->getSchemaBuilder()->create('images', function (Blueprint $table) {
+            $table->increments('id');
             $table->morphs('imageable');
             $table->string('name');
             $table->timestamps();
@@ -83,6 +81,7 @@ abstract class TestCase extends Orchestra
         });
 
         $app['db']->connection()->getSchemaBuilder()->create('options', function (Blueprint $table) {
+            $table->increments('id');
             $table->morphs('optionable');
             $table->string('name');
             $table->timestamps();
@@ -101,8 +100,11 @@ abstract class TestCase extends Orchestra
         });
 
         $app['db']->connection()->getSchemaBuilder()->create('taggables', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('tag_id')->unsigned();
             $table->morphs('taggable');
+            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
+
         });
 
         $app['db']->connection()->getSchemaBuilder()->create('bad_models', function (Blueprint $table) {
@@ -114,45 +116,5 @@ abstract class TestCase extends Orchestra
             $table->increments('id');
             $table->timestamps();
         });
-    }
-
-    protected function generateFactory()
-    {
-        $user = User::create(['name' => 'user1']);
-
-        $user->image()->save(new Image(['name' => 'image1']));
-
-        $user = User::create(['name' => 'user2']);
-
-        $user->image()->save(new Image(['name' => 'image2']));
-
-        $photo = Photo::create(['name' => 'photo1']);
-
-        $option = new Option();
-        $option->name = 'option1';
-        $photo->options()->save($option);
-
-        $option = new Option();
-        $option->name = 'option1b';
-        $photo->options()->save($option);
-
-        $photo = Photo::create(['name' => 'photo2']);
-
-        $option = new Option();
-        $option->name = 'option2';
-        $photo->options()->save($option);
-
-        Tag::create(['name' => 'tag1']);
-        Tag::create(['name' => 'tag2']);
-        Tag::create(['name' => 'tag3']);
-        Tag::create(['name' => 'tag4']);
-
-        $video = Video::create(['name' => 'video1']);
-
-        $video->tags()->attach([1, 2]);
-
-        $video = Video::create(['name' => 'video2']);
-
-        $video->tags()->attach([2, 3]);
     }
 }

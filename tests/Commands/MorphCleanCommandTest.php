@@ -1,81 +1,27 @@
 <?php
 
-namespace Tests\Commands;
-
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
 use Tests\Models\Image;
-use Tests\Models\Photo;
 use Tests\Models\User;
-use Tests\Models\Video;
 use Tests\TestCase;
 
 class MorphCleanCommandTest extends TestCase
 {
-    public function test_command_delete_morph_one()
+    public function testMorphCleanCommand()
     {
-        $totalImages = Image::count();
+        factory(User::class, 2)
+            ->create()
+            ->each(function ($user) {
+                $user->image()->save(factory(Image::class)->make());
+            });
 
-        $deleteImages = 1;
+        User::where('id', 1)->delete();
 
-        User::where('id', User::first()->id)->delete();
+        $this->assertEquals(2, Image::count());
+        $this->assertNotNull(User::first()->image);
 
-        $this->assertEquals(
-            $totalImages,
-            Image::count()
-        );
+        $this->artisan('morph:clean')->assertExitCode(0);
 
-        Artisan::call('morph:clean');
-
-        $this->assertEquals(
-            $totalImages - $deleteImages,
-            Image::count()
-        );
-    }
-
-    public function test_command_delete_morph_many()
-    {
-        $totalOptions = DB::table('options')->count();
-
-        $deleteOptions = Photo::first()->options()->count();
-
-        Photo::where('id', Photo::first()->id)->delete();
-
-        $this->assertEquals(
-            $totalOptions,
-            DB::table('options')->count()
-        );
-
-        Artisan::call('morph:clean');
-
-        $this->assertGreaterThan(0, $deleteOptions);
-
-        $this->assertEquals(
-            $totalOptions - $deleteOptions,
-            DB::table('options')->count()
-        );
-    }
-
-    public function test_command_delete_morph_to_many()
-    {
-        $totalTags = DB::table('taggables')->count();
-
-        $deleteTags = Video::first()->tags()->count();
-
-        Video::where('id', Video::first()->id)->delete();
-
-        $this->assertEquals(
-            $totalTags,
-            DB::table('taggables')->count()
-        );
-
-        Artisan::call('morph:clean');
-
-        $this->assertGreaterThan(0, $deleteTags);
-
-        $this->assertEquals(
-            $totalTags - $deleteTags,
-            DB::table('taggables')->count()
-        );
+        $this->assertEquals(1, Image::count());
+        $this->assertNotNull(User::where('id', 2)->first()->image);
     }
 }
