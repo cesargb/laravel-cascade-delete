@@ -1,8 +1,7 @@
 <?php
 
-namespace Cesargb\Database\Support\Helpers;
+namespace Cesargb\Database\Support;
 
-use Cesargb\Database\Support\CascadeDelete;
 use Illuminate\Database\Eloquent\Relations\MorphOneOrMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Facades\DB;
@@ -188,5 +187,4 @@ class Morph
     {
         return $relation instanceof MorphOneOrMany || $relation instanceof MorphToMany;
     }
-
 }

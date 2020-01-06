@@ -2,7 +2,7 @@
 
 namespace Cesargb\Database\Support\Commands;
 
-use Cesargb\Database\Support\Helpers\Morph;
+use Cesargb\Database\Support\Morph;
 use Illuminate\Console\Command;
 
 class MorphCleanCommand extends Command

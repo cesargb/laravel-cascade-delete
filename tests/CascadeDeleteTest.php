@@ -1,10 +1,9 @@
 <?php
 
-namespace Tests\Helpers;
+namespace Tests;
 
 use Tests\Models\Image;
 use Tests\Models\User;
-use Tests\TestCase;
 
 class CascadeDeleteTest extends TestCase
 {
@@ -39,5 +38,4 @@ class CascadeDeleteTest extends TestCase
 
         $this->assertEquals(1, Image::count());
     }
-
 }

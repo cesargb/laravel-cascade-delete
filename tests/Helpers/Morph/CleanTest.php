@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Helpers;
+namespace Tests;
 
-use Cesargb\Database\Support\Helpers\Morph;
+use Cesargb\Database\Support\Morph;
 use Illuminate\Support\Facades\DB;
 use Tests\Models\Image;
 use Tests\Models\Option;
@@ -10,7 +10,6 @@ use Tests\Models\Photo;
 use Tests\Models\Tag;
 use Tests\Models\User;
 use Tests\Models\Video;
-use Tests\TestCase;
 
 class CleanTest extends TestCase
 {
@@ -93,5 +92,22 @@ class CleanTest extends TestCase
 
         $this->assertEquals(2, DB::table('taggables')->count());
         $this->assertEquals(2, Video::where('id', 2)->first()->tags()->count());
+    }
+
+    public function testCleanResidualMorphRelationsWhenMorphDontExist()
+    {
+        $tag = factory(Tag::class)->create();
+
+        DB::table('taggables')->insert([
+            'taggable_type' => 'ModelDontExists',
+            'taggable_id' => 1,
+            'tag_id' => $tag->id,
+        ]);
+
+        $this->assertEquals(1, DB::table('taggables')->count());
+
+        Morph::cleanResidualMorphRelations();
+
+        $this->assertEquals(0, DB::table('taggables')->count());
     }
 }

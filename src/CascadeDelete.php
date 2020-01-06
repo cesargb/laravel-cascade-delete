@@ -2,8 +2,6 @@
 
 namespace Cesargb\Database\Support;
 
-use Cesargb\Database\Support\Helpers\Morph;
-
 trait CascadeDelete
 {
     /**

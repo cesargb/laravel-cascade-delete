@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Helpers;
+namespace Tests;
 
-use Cesargb\Database\Support\Helpers\Morph;
+use Cesargb\Database\Support\Morph;
 use Illuminate\Support\Facades\DB;
 use Tests\Models\Image;
 use Tests\Models\Option;
@@ -10,7 +10,6 @@ use Tests\Models\Photo;
 use Tests\Models\Tag;
 use Tests\Models\User;
 use Tests\Models\Video;
-use Tests\TestCase;
 
 class MorphTest extends TestCase
 {
