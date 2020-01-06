@@ -11,7 +11,7 @@ use Tests\Models\Tag;
 use Tests\Models\User;
 use Tests\Models\Video;
 
-class MorphTest extends TestCase
+class DeleteTest extends TestCase
 {
     public function testDeleteMorphRelationsFromRecordModelMorphOne()
     {

@@ -104,7 +104,6 @@ abstract class TestCase extends Orchestra
             $table->integer('tag_id')->unsigned();
             $table->morphs('taggable');
             $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
-
         });
 
         $app['db']->connection()->getSchemaBuilder()->create('bad_models', function (Blueprint $table) {
