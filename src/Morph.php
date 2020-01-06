@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class Morph
 {
     /**
-     * Get the classes that use the trait CascadeDelete.
+     * Get the classes that use the trait CascadeDelete
      *
      * @return \Illuminate\Database\Eloquent\Model[]
      */
@@ -24,7 +24,7 @@ class Morph
     }
 
     /**
-     * Delete polymorphic relationships of the single records from Model.
+     * Delete polymorphic relationships of the single records from Model
      *
      * @param \Illuminate\Database\Eloquent\Model $model
      * @return void
@@ -52,7 +52,7 @@ class Morph
     }
 
     /**
-     * Clean residual polymorphic relationships from a Model.
+     * Clean residual polymorphic relationships from a Model
      *
      * @param \Illuminate\Database\Eloquent\Model $model
      * @return int Num rows was deleted
@@ -83,7 +83,7 @@ class Morph
     }
 
     /**
-     * Clean residual for a Table.
+     * Clean residual for a Table
      *
      * @param string $table      Table with morph relation
      * @param string $fieldType  Field defined for Morph Type
@@ -124,7 +124,7 @@ class Morph
     }
 
     /**
-     * Get the classes names that use the trait CascadeDelete.
+     * Get the classes names that use the trait CascadeDelete
      *
      * @return array
      */
@@ -142,7 +142,7 @@ class Morph
     }
 
     /**
-     * Fetch polymorphic relationships from a Model.
+     * Fetch polymorphic relationships from a Model
      *
      * @param \Illuminate\Database\Eloquent\Model $model
      * @return array
@@ -163,7 +163,7 @@ class Morph
     }
 
     /**
-     * Verify if method of a Model return a polymorphic relationship.
+     * Verify if method of a Model return a polymorphic relationship
      *
      * @param \Illuminate\Database\Eloquent\Model  $model
      * @param string                               $methodName
@@ -177,7 +177,7 @@ class Morph
     }
 
     /**
-     * Verify if a object is a instance of a polymorphic relationship.
+     * Verify if a object is a instance of a polymorphic relationship
      *
      * @param mixed $relation
      * @return bool
