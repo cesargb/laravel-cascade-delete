@@ -29,7 +29,6 @@ class DeleteTest extends TestCase
         $this->assertEquals(1, Image::count());
     }
 
-
     public function test_delete_morph_relations_from_record_model_MorphOne()
     {
         factory(User::class, 2)

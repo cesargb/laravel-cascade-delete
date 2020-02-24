@@ -26,7 +26,7 @@ trait CascadeDelete
      */
     public function getCascadeDeleteMorph()
     {
-        return (array)($this->cascadeDeleteMorph ?? []);
+        return (array) ($this->cascadeDeleteMorph ?? []);
     }
 
     /**

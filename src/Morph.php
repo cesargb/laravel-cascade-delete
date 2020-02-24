@@ -43,6 +43,11 @@ class Morph
         }
     }
 
+    /**
+     * Clean residual polymorphic relationships from all Models.
+     *
+     * @return int Num rows was deleted
+     */
     public function cleanResidual()
     {
         $numRowsDeleted = 0;
@@ -175,7 +180,7 @@ class Morph
     protected function methodReturnedMorphRelation($model, $methodName)
     {
         if (!method_exists($model, $methodName)) {
-            return null;
+            return;
         }
 
         $relation = $model->$methodName();
@@ -195,7 +200,7 @@ class Morph
     }
 
     /**
-     * Undocumented function
+     * Load models with Cascade Delete
      *
      * @param string|array $path
      * @return void
