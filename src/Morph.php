@@ -179,7 +179,7 @@ class Morph
      */
     protected function methodReturnedMorphRelation($model, $methodName)
     {
-        if (!method_exists($model, $methodName)) {
+        if (! method_exists($model, $methodName)) {
             return;
         }
 
@@ -200,7 +200,7 @@ class Morph
     }
 
     /**
-     * Load models with Cascade Delete
+     * Load models with Cascade Delete.
      *
      * @param string|array $path
      * @return void
