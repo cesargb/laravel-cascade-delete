@@ -13,7 +13,7 @@ use Tests\Models\Video;
 
 class DeleteTest extends TestCase
 {
-    public function testDeleteMorphRelationsFromRecordModelMorphOne()
+    public function test_delete_morph_relations_from_event_model_MorphOne()
     {
         factory(User::class, 2)
             ->create()
@@ -24,13 +24,30 @@ class DeleteTest extends TestCase
         $this->assertEquals(2, Image::count());
         $this->assertNotNull(User::first()->image);
 
-        Morph::deleteMorphRelationsFromRecordModel(User::first());
+        User::first()->delete();
+
+        $this->assertEquals(1, Image::count());
+    }
+
+
+    public function test_delete_morph_relations_from_record_model_MorphOne()
+    {
+        factory(User::class, 2)
+            ->create()
+            ->each(function ($user) {
+                $user->image()->save(factory(Image::class)->make());
+            });
+
+        $this->assertEquals(2, Image::count());
+        $this->assertNotNull(User::first()->image);
+
+        (new Morph)->delete(User::first());
 
         $this->assertEquals(1, Image::count());
         $this->assertNull(User::first()->image);
     }
 
-    public function testDeleteMorphRelationsFromRecordModelMorphMany()
+    public function test_delete_morph_relations_from_record_model_MorphMany()
     {
         factory(Photo::class, 2)
             ->create()
@@ -41,13 +58,13 @@ class DeleteTest extends TestCase
         $this->assertEquals(4, Option::count());
         $this->assertEquals(2, Photo::first()->options()->count());
 
-        Morph::deleteMorphRelationsFromRecordModel(Photo::first());
+        (new Morph)->delete(Photo::first());
 
         $this->assertEquals(2, Option::count());
         $this->assertEquals(0, Photo::first()->options()->count());
     }
 
-    public function testDeleteMorphRelationsFromRecordModelMorphToMany()
+    public function test_delete_morph_relations_from_record_model_MorphToMany()
     {
         factory(Tag::class, 2)->create();
 
@@ -61,7 +78,7 @@ class DeleteTest extends TestCase
         $this->assertEquals(2, Video::skip(1)->first()->tags()->count());
         $this->assertEquals(4, DB::table('taggables')->count());
 
-        Morph::deleteMorphRelationsFromRecordModel(Video::first());
+        (new Morph)->delete(Video::first());
 
         $this->assertEquals(0, Video::first()->tags()->count());
         $this->assertEquals(2, Video::skip(1)->first()->tags()->count());

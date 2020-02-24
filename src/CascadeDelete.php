@@ -13,7 +13,9 @@ trait CascadeDelete
     protected static function bootCascadeDelete()
     {
         static::deleted(function ($model) {
-            Morph::deleteMorphRelationsFromRecordModel($model);
+            $morph = new Morph();
+
+            $morph->delete($model);
         });
     }
 
@@ -24,7 +26,7 @@ trait CascadeDelete
      */
     public function getCascadeDeleteMorph()
     {
-        return (array) ($this->cascadeDeleteMorph ?? []);
+        return (array)($this->cascadeDeleteMorph ?? []);
     }
 
     /**
@@ -35,6 +37,8 @@ trait CascadeDelete
      */
     public function deleteMorphResidual()
     {
-        return Morph::cleanResidualMorphRelationsFromModel($this);
+        $morph = new Morph();
+
+        return $morph->cleanResidualByModel($this);
     }
 }

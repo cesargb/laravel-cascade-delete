@@ -13,7 +13,9 @@ class MorphCleanCommand extends Command
 
     public function handle()
     {
-        foreach (Morph::getModelsWithCascadeDeleteTrait() as $model) {
+        $morph = new Morph();
+
+        foreach ($morph->getCascadeDeleteModels() as $model) {
             $numRowsDeleted = $model->deleteMorphResidual();
 
             if ($numRowsDeleted > 0) {

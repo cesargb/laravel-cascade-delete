@@ -5,6 +5,7 @@ namespace Cesargb\Database\Support;
 use Illuminate\Database\Eloquent\Relations\MorphOneOrMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\Finder\Finder;
 
 class Morph
 {
@@ -13,13 +14,15 @@ class Morph
      *
      * @return \Illuminate\Database\Eloquent\Model[]
      */
-    public static function getModelsWithCascadeDeleteTrait()
+    public function getCascadeDeleteModels()
     {
+        $this->load();
+
         return array_map(
             function ($modelName) {
                 return new $modelName;
             },
-            self::getModelsNameWithCascadeDeleteTrait()
+            $this->getModelsNameWithCascadeDeleteTrait()
         );
     }
 
@@ -29,9 +32,9 @@ class Morph
      * @param \Illuminate\Database\Eloquent\Model $model
      * @return void
      */
-    public static function deleteMorphRelationsFromRecordModel($model)
+    public function delete($model)
     {
-        foreach (self::getValidMorphRelationsFromModel($model) as $relationMorph) {
+        foreach ($this->getValidMorphRelationsFromModel($model) as $relationMorph) {
             if ($relationMorph instanceof MorphOneOrMany) {
                 $relationMorph->delete();
             } elseif ($relationMorph instanceof MorphToMany) {
@@ -40,12 +43,12 @@ class Morph
         }
     }
 
-    public static function cleanResidualMorphRelations()
+    public function cleanResidual()
     {
         $numRowsDeleted = 0;
 
-        foreach (self::getModelsWithCascadeDeleteTrait() as $model) {
-            $numRowsDeleted += self::cleanResidualMorphRelationsFromModel($model);
+        foreach ($this->getCascadeDeleteModels() as $model) {
+            $numRowsDeleted += $this->cleanResidualByModel($model);
         }
 
         return $numRowsDeleted;
@@ -57,7 +60,7 @@ class Morph
      * @param \Illuminate\Database\Eloquent\Model $model
      * @return int Num rows was deleted
      */
-    public static function cleanResidualMorphRelationsFromModel($model)
+    public function cleanResidualByModel($model)
     {
         $numRowsDeleted = 0;
 
@@ -65,13 +68,13 @@ class Morph
 
         foreach ($relationsMorphs as $relation) {
             if ($relation instanceof MorphOneOrMany) {
-                $numRowsDeleted += self::cleanResidual(
+                $numRowsDeleted += $this->cleanResidualFromDB(
                     $relation->getRelated()->getTable(),
                     $relation->getMorphType(),
                     $relation->getForeignKeyName()
                 );
             } elseif ($relation instanceof MorphToMany) {
-                $numRowsDeleted += self::cleanResidual(
+                $numRowsDeleted += $this->cleanResidualFromDB(
                     $relation->getTable(),
                     $relation->getMorphType(),
                     $relation->getForeignPivotKeyName()
@@ -90,7 +93,7 @@ class Morph
      * @param string $fieldId    Field defined for Morph Id
      * @return int Num rows was deleted
      */
-    protected static function cleanResidual($table, $fieldType, $fieldId)
+    protected function cleanResidualFromDB($table, $fieldType, $fieldId)
     {
         $numRowsDeleted = 0;
 
@@ -128,7 +131,7 @@ class Morph
      *
      * @return array
      */
-    protected static function getModelsNameWithCascadeDeleteTrait()
+    protected function getModelsNameWithCascadeDeleteTrait()
     {
         return array_filter(
             get_declared_classes(),
@@ -147,12 +150,12 @@ class Morph
      * @param \Illuminate\Database\Eloquent\Model $model
      * @return array
      */
-    protected static function getValidMorphRelationsFromModel($model)
+    protected function getValidMorphRelationsFromModel($model)
     {
         return array_filter(
             array_map(
                 function ($methodName) use ($model) {
-                    return self::methodReturnedMorphRelation($model, $methodName);
+                    return $this->methodReturnedMorphRelation($model, $methodName);
                 },
                 $model->getCascadeDeleteMorph()
             ),
@@ -169,11 +172,15 @@ class Morph
      * @param string                               $methodName
      * @return bool
      */
-    protected static function methodReturnedMorphRelation($model, $methodName)
+    protected function methodReturnedMorphRelation($model, $methodName)
     {
+        if (!method_exists($model, $methodName)) {
+            return null;
+        }
+
         $relation = $model->$methodName();
 
-        return self::isMorphRelation($relation) ? $relation : null;
+        return $this->isMorphRelation($relation) ? $relation : null;
     }
 
     /**
@@ -182,8 +189,30 @@ class Morph
      * @param mixed $relation
      * @return bool
      */
-    protected static function isMorphRelation($relation)
+    protected function isMorphRelation($relation)
     {
         return $relation instanceof MorphOneOrMany || $relation instanceof MorphToMany;
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param string|array $path
+     * @return void
+     */
+    protected function load()
+    {
+        foreach ($this->findModels() as $file) {
+            require_once $file->getPathname();
+        }
+    }
+
+    protected function findModels()
+    {
+        return Finder::create()
+            ->files()
+            ->in(config('morph.models_paths', app_path()))
+            ->name('*.php')
+            ->contains('CascadeDelete');
     }
 }

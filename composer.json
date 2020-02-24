@@ -33,8 +33,7 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit --colors=always --coverage-text",
-        "fix": "vendor/bin/php-cs-fixer fix"
+        "test": "vendor/bin/phpunit --colors=always --coverage-text"
     },
     "license": "MIT",
     "authors": [

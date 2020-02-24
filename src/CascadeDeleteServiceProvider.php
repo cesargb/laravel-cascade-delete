@@ -14,6 +14,10 @@ class CascadeDeleteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->publishes([
+            __DIR__.'/../config/morph.php' => config_path('morph.php'),
+        ], 'config');
+
         if ($this->app->runningInConsole()) {
             $this->commands([
                 MorphCleanCommand::class,
