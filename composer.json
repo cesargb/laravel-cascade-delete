@@ -13,8 +13,9 @@
     "type": "library",
     "require": {
         "php": "^7.1",
-        "illuminate/database": "~5.5.45|~5.8|^6.0",
         "illuminate/console": "~5.5.45|~5.8|^6.0",
+        "illuminate/database": "~5.5.45|~5.8|^6.0",
+        "illuminate/events": "~5.5.45|~5.8|^6.0",
         "illuminate/support": "~5.5.45|~5.8|^6.0"
     },
     "require-dev": {

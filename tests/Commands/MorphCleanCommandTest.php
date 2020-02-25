@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\Commands;
+
 use Tests\Models\Image;
 use Tests\Models\User;
 use Tests\TestCase;

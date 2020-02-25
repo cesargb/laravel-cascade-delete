@@ -2,9 +2,11 @@
 
 namespace Cesargb\Database\Support;
 
+use Cesargb\Database\Support\Events\RelationMorphFromModelWasCleaned;
 use Illuminate\Database\Eloquent\Relations\MorphOneOrMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use Symfony\Component\Finder\Finder;
 
 class Morph
@@ -46,14 +48,15 @@ class Morph
     /**
      * Clean residual polymorphic relationships from all Models.
      *
+     * @param boolean $dryRun
      * @return int Num rows was deleted
      */
-    public function cleanResidual()
+    public function cleanResidual(bool $dryRun = false)
     {
         $numRowsDeleted = 0;
 
         foreach ($this->getCascadeDeleteModels() as $model) {
-            $numRowsDeleted += $this->cleanResidualByModel($model);
+            $numRowsDeleted += $this->cleanResidualByModel($model, $dryRun);
         }
 
         return $numRowsDeleted;
@@ -63,27 +66,38 @@ class Morph
      * Clean residual polymorphic relationships from a Model.
      *
      * @param \Illuminate\Database\Eloquent\Model $model
+     * @param boolean $dryRun
      * @return int Num rows was deleted
      */
-    public function cleanResidualByModel($model)
+    public function cleanResidualByModel($model, bool $dryRun = false)
     {
         $numRowsDeleted = 0;
 
-        $relationsMorphs = self::getValidMorphRelationsFromModel($model);
+        $relationsMorphs = $this->getValidMorphRelationsFromModel($model);
 
         foreach ($relationsMorphs as $relation) {
             if ($relation instanceof MorphOneOrMany) {
-                $numRowsDeleted += $this->cleanResidualFromDB(
+                $deleted = $this->cleanResidualFromDB(
                     $relation->getRelated()->getTable(),
                     $relation->getMorphType(),
-                    $relation->getForeignKeyName()
+                    $relation->getForeignKeyName(),
+                    $dryRun ? 'count' : 'delete'
                 );
+
+                Event::dispatch(new RelationMorphFromModelWasCleaned($model, $relation, $deleted));
+
+                $numRowsDeleted += $deleted;
             } elseif ($relation instanceof MorphToMany) {
-                $numRowsDeleted += $this->cleanResidualFromDB(
+                $deleted = $this->cleanResidualFromDB(
                     $relation->getTable(),
                     $relation->getMorphType(),
-                    $relation->getForeignPivotKeyName()
+                    $relation->getForeignPivotKeyName(),
+                    $dryRun ? 'count' : 'delete'
                 );
+
+                Event::dispatch(new RelationMorphFromModelWasCleaned($model, $relation, $deleted));
+
+                $numRowsDeleted += $deleted;
             }
         }
 
@@ -96,9 +110,10 @@ class Morph
      * @param string $table      Table with morph relation
      * @param string $fieldType  Field defined for Morph Type
      * @param string $fieldId    Field defined for Morph Id
+     * @param string $method     Method to execute `delete` or `count`
      * @return int Num rows was deleted
      */
-    protected function cleanResidualFromDB($table, $fieldType, $fieldId)
+    protected function cleanResidualFromDB($table, $fieldType, $fieldId, string $method = 'delete')
     {
         $numRowsDeleted = 0;
 
@@ -120,11 +135,11 @@ class Morph
                                     ->whereRaw(
                                         $parentObject->getTable().'.'.$parentObject->getKeyName().' = '.$table.'.'.$fieldId
                                     );
-                        })->delete();
+                        })->$method();
             } else {
                 $numRowsDeleted += DB::table($table)
                         ->where($fieldType, $parent)
-                        ->delete();
+                        ->$method();
             }
         }
 
