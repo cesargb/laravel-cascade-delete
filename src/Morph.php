@@ -48,7 +48,7 @@ class Morph
     /**
      * Clean residual polymorphic relationships from all Models.
      *
-     * @param boolean $dryRun
+     * @param bool $dryRun
      * @return int Num rows was deleted
      */
     public function cleanResidual(bool $dryRun = false)
@@ -66,7 +66,7 @@ class Morph
      * Clean residual polymorphic relationships from a Model.
      *
      * @param \Illuminate\Database\Eloquent\Model $model
-     * @param boolean $dryRun
+     * @param bool $dryRun
      * @return int Num rows was deleted
      */
     public function cleanResidualByModel($model, bool $dryRun = false)

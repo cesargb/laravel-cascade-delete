@@ -11,7 +11,7 @@ class RelationMorphFromModelWasCleaned
     public $numDeleted;
 
     /**
-     * Event dispach when clean relations from model
+     * Event dispach when clean relations from model.
      *
      * @param \Illuminate\Database\Eloquent\Model $model
      * @param string $relation

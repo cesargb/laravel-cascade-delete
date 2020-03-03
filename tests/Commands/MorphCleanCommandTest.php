@@ -22,7 +22,7 @@ class MorphCleanCommandTest extends TestCase
         $this->assertEquals(2, Image::count());
         $this->assertNotNull(User::first()->image);
 
-        list($versionMayor, $versionMinor) = explode('.', App::version());
+        [$versionMayor, $versionMinor] = explode('.', App::version());
 
         if ($versionMayor == 5 && $versionMinor == 5) {
             $this->artisan('morph:clean');
