@@ -25,7 +25,7 @@ class MorphCleanCommandTest extends TestCase
         [$versionMayor, $versionMinor] = explode('.', App::version());
 
         if ($versionMayor == 5 && $versionMinor == 5) {
-            $this->artisan('morph:clean', ['--dry-run' => true]);
+            $this->artisan('morph:clean');
         } else {
             $this->artisan('morph:clean')->assertExitCode(0);
         }
