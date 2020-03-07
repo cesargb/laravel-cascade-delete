@@ -21,12 +21,12 @@ class MorphCleanCommand extends Command
         $morph = new Morph();
 
         foreach ($morph->getCascadeDeleteModels() as $model) {
-            $this->info('Clean from model %s:', get_class($model));
+            $this->info(sprintf('Clean from model %s:', get_class($model)));
 
             $numRows = $model->deleteMorphResidual($this->option('dry-run'));
 
             if ($numRows === 0) {
-                $this->info("\It's already cleaned");
+                $this->info("\tIt's already cleaned");
             }
         }
     }
