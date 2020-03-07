@@ -33,12 +33,11 @@ trait CascadeDelete
      * Clean residual morph relation from a model. Return number
      * of deleted rows.
      *
+     * @param boolean $dryRun
      * @return int
      */
-    public function deleteMorphResidual()
+    public function deleteMorphResidual(bool $dryRun = false)
     {
-        $morph = new Morph();
-
-        return $morph->cleanResidualByModel($this);
+        return (new Morph())->cleanResidualByModel($this, $dryRun);
     }
 }

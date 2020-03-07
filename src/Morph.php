@@ -84,7 +84,7 @@ class Morph
                     $dryRun ? 'count' : 'delete'
                 );
 
-                Event::dispatch(new RelationMorphFromModelWasCleaned($model, $relation, $deleted));
+                Event::dispatch(new RelationMorphFromModelWasCleaned($model, $relation, $deleted, $dryRun));
 
                 $numRowsDeleted += $deleted;
             } elseif ($relation instanceof MorphToMany) {
@@ -95,7 +95,7 @@ class Morph
                     $dryRun ? 'count' : 'delete'
                 );
 
-                Event::dispatch(new RelationMorphFromModelWasCleaned($model, $relation, $deleted));
+                Event::dispatch(new RelationMorphFromModelWasCleaned($model, $relation, $deleted, $dryRun));
 
                 $numRowsDeleted += $deleted;
             }

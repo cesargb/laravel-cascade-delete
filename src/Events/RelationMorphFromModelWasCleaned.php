@@ -2,6 +2,9 @@
 
 namespace Cesargb\Database\Support\Events;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
+
 class RelationMorphFromModelWasCleaned
 {
     public $model;
@@ -10,17 +13,21 @@ class RelationMorphFromModelWasCleaned
 
     public $numDeleted;
 
-    /**
-     * Event dispach when clean relations from model
-     *
-     * @param \Illuminate\Database\Eloquent\Model $model
-     * @param string $relation
-     * @param int $numDeleted
-     */
-    public function __construct($model, $relation, $numDeleted)
+    public $dryRun;
+
+     /**
+      * Event dispach when clean relations morph from model
+      *
+      * @param Model $model
+      * @param Relation $relation
+      * @param integer $numDeleted
+      * @param boolean $dryRun
+      */
+    public function __construct(Model $model, Relation $relation, int $numDeleted, bool $dryRun)
     {
         $this->model = $model;
         $this->relation = $relation;
         $this->numDeleted = $numDeleted;
+        $this->dryRun = $dryRun;
     }
 }
