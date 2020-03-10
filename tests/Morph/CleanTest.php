@@ -120,7 +120,6 @@ class CleanTest extends TestCase
     }
 }
 
-
 class MorphMock extends Morph
 {
     public function callGetCascadeDeleteModels()

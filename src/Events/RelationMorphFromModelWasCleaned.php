@@ -20,8 +20,8 @@ class RelationMorphFromModelWasCleaned
      *
      * @param Model $model
      * @param Relation $relation
-     * @param integer $numDeleted
-     * @param boolean $dryRun
+     * @param int $numDeleted
+     * @param bool $dryRun
      */
     public function __construct(Model $model, Relation $relation, int $numDeleted, bool $dryRun)
     {
