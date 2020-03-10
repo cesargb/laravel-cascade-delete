@@ -127,5 +127,4 @@ class MorphMock extends Morph
     {
         return $this->getCascadeDeleteModels();
     }
-
 }
