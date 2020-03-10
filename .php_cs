@@ -22,6 +22,8 @@ return Config::create()
         'no_unneeded_curly_braces' => true,
         'phpdoc_order' => true,
         'phpdoc_types_order' => true,
+        'phpdoc_scalar' => true,
+        'phpdoc_scalar' => true,
         'align_multiline_comment' => true,
     ])
     ->setUsingCache(false)

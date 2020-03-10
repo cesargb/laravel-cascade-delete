@@ -62,7 +62,7 @@ class Morph
             if ($relation instanceof MorphOneOrMany || $relation instanceof MorphToMany) {
                 $deleted = $this->queryCleanOrphan($model, $relation, $dryRun);
 
-                if ($deleted > 0 ) {
+                if ($deleted > 0) {
                     Event::dispatch(
                         new RelationMorphFromModelWasCleaned($model, $relation, $deleted, $dryRun)
                     );
@@ -122,7 +122,7 @@ class Morph
     }
 
     /**
-     * Get table and fields from morph relation
+     * Get table and fields from morph relation.
      *
      * @param MorphOneOrMany|MorphToMany $relation
      * @return array [$table, $fieldType, $fieldId]
@@ -213,7 +213,7 @@ class Morph
     /**
      * Load models with Cascade Delete.
      *
-     * @param string|array $path
+     * @param array|string $path
      * @return void
      */
     protected function load()
