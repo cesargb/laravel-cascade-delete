@@ -15,7 +15,7 @@ class CleanTest extends TestCase
 {
     public function testLoadModels()
     {
-        $this->assertEquals(5, count((new Morph)->getCascadeDeleteModels()));
+        $this->assertEquals(5, count((new MorphMock)->callGetCascadeDeleteModels()));
     }
 
     public function testCleanResidualMorphRelationsFromModelMorphOneWithoutLoad()
@@ -26,7 +26,7 @@ class CleanTest extends TestCase
                 $user->image()->save(factory(Image::class)->make());
             });
 
-        User::where('id', 1)->delete();
+        User::where('id', 2)->delete();
 
         $this->assertEquals(2, Image::count());
         $this->assertNotNull(User::first()->image);
@@ -35,7 +35,7 @@ class CleanTest extends TestCase
 
         $this->assertEquals(1, $numRowsDeleted);
         $this->assertEquals(1, Image::count());
-        $this->assertNotNull(User::where('id', 2)->first()->image);
+        $this->assertNotNull(User::where('id', 1)->first()->image);
     }
 
     public function testCleanResidualMorphRelationsFromModelMorphOne()
@@ -66,7 +66,7 @@ class CleanTest extends TestCase
                 $photo->options()->saveMany(factory(Option::class, 2)->make());
             });
 
-        Photo::where('id', 1)->delete();
+        Photo::where('id', 2)->delete();
 
         $this->assertEquals(4, Option::count());
         $this->assertEquals(2, Photo::first()->options()->count());
@@ -75,7 +75,7 @@ class CleanTest extends TestCase
 
         $this->assertEquals(2, $numRowsDeleted);
         $this->assertEquals(2, Option::count());
-        $this->assertNotNull(2, Photo::where('id', 2)->first()->options()->count());
+        $this->assertNotNull(2, Photo::where('id', 1)->first()->options()->count());
     }
 
     public function testCleanResidualMorphRelationsFromModelMorphToMany()
@@ -88,7 +88,7 @@ class CleanTest extends TestCase
                 $video->tags()->attach(Tag::pluck('id'));
             });
 
-        Video::where('id', 1)->delete();
+        Video::where('id', 2)->delete();
 
         $this->assertEquals(4, DB::table('taggables')->count());
 
@@ -96,7 +96,7 @@ class CleanTest extends TestCase
 
         $this->assertEquals(2, $numRowsDeleted);
         $this->assertEquals(2, DB::table('taggables')->count());
-        $this->assertEquals(2, Video::where('id', 2)->first()->tags()->count());
+        $this->assertEquals(2, Video::where('id', 1)->first()->tags()->count());
     }
 
     public function testCleanResidualMorphRelations()
@@ -113,26 +113,19 @@ class CleanTest extends TestCase
 
         $this->assertEquals(4, DB::table('taggables')->count());
 
-        (new Morph)->cleanResidual();
+        (new Morph)->cleanResidualAllModels();
 
         $this->assertEquals(2, DB::table('taggables')->count());
         $this->assertEquals(2, Video::where('id', 2)->first()->tags()->count());
     }
+}
 
-    public function testCleanResidualMorphRelationsWhenMorphDontExist()
+
+class MorphMock extends Morph
+{
+    public function callGetCascadeDeleteModels()
     {
-        $tag = factory(Tag::class)->create();
-
-        DB::table('taggables')->insert([
-            'taggable_type' => 'ModelDontExists',
-            'taggable_id' => 1,
-            'tag_id' => $tag->id,
-        ]);
-
-        $this->assertEquals(1, DB::table('taggables')->count());
-
-        (new Morph)->cleanResidual();
-
-        $this->assertEquals(0, DB::table('taggables')->count());
+        return $this->getCascadeDeleteModels();
     }
+
 }
