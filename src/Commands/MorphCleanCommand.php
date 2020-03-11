@@ -28,8 +28,9 @@ class MorphCleanCommand extends Command
         Event::listen(
             RelationMorphFromModelWasCleaned::class,
             function (RelationMorphFromModelWasCleaned $event) {
-                $this->comment(sprintf(
-                    "\t- From relation %s: %d %s",
+                $this->info(sprintf(
+                    "\t✔ Clean model %s in the table %s: %d %s.",
+                    get_class($event->model),
                     $event->relation->getRelated()->getTable(),
                     $event->numDeleted,
                     $event->dryRun ? 'rows to remove' : 'rows cleaned'
