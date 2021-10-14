@@ -16,7 +16,7 @@ class Morph
     /**
      * Delete polymorphic relationships of the single records from Model.
      *
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return void
      */
     public function delete($model)
@@ -33,7 +33,7 @@ class Morph
     /**
      * Clean residual polymorphic relationships from all Models.
      *
-     * @param bool $dryRun
+     * @param  bool  $dryRun
      * @return int Num rows was deleted
      */
     public function cleanResidualAllModels(bool $dryRun = false)
@@ -50,8 +50,8 @@ class Morph
     /**
      * Clean residual polymorphic relationships from a Model.
      *
-     * @param Model $model
-     * @param bool $dryRun
+     * @param  Model  $model
+     * @param  bool  $dryRun
      * @return int Num rows was deleted
      */
     public function cleanResidualByModel($model, bool $dryRun = false)
@@ -95,9 +95,9 @@ class Morph
     /**
      * Query to clean orphan morph table.
      *
-     * @param Model $parentModel
-     * @param MorphOneOrMany|MorphToMany $relation
-     * @param bool $dryRun
+     * @param  Model  $parentModel
+     * @param  MorphOneOrMany|MorphToMany  $relation
+     * @param  bool  $dryRun
      * @return int Num rows was deleted
      */
     protected function queryCleanOrphan(Model $parentModel, Relation $relation, bool $dryRun = false)
@@ -124,7 +124,7 @@ class Morph
     /**
      * Get table and fields from morph relation.
      *
-     * @param MorphOneOrMany|MorphToMany $relation
+     * @param  MorphOneOrMany|MorphToMany  $relation
      * @return array [$table, $fieldType, $fieldId]
      */
     protected function getStructureMorphRelation(Relation $relation): array
@@ -163,7 +163,7 @@ class Morph
     /**
      * Fetch polymorphic relationships from a Model.
      *
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return array
      */
     protected function getValidMorphRelationsFromModel($model)
@@ -184,8 +184,8 @@ class Morph
     /**
      * Verify if method of a Model return a polymorphic relationship.
      *
-     * @param \Illuminate\Database\Eloquent\Model  $model
-     * @param string                               $methodName
+     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param  string  $methodName
      * @return bool
      */
     protected function methodReturnedMorphRelation($model, $methodName)
@@ -202,7 +202,7 @@ class Morph
     /**
      * Verify if a object is a instance of a polymorphic relationship.
      *
-     * @param mixed $relation
+     * @param  mixed  $relation
      * @return bool
      */
     protected function isMorphRelation($relation)
@@ -213,7 +213,7 @@ class Morph
     /**
      * Load models with Cascade Delete.
      *
-     * @param array|string $path
+     * @param  array|string  $path
      * @return void
      */
     protected function load()
