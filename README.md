@@ -77,6 +77,7 @@ $video = new Video;
 
 $video->deleteMorphResidual();
 ```
+
 ### Command to remove all residuals
 
 You can use Artisan command `morph:clean` to remove all residuals data from all
