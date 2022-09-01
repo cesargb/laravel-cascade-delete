@@ -107,7 +107,7 @@ class Morph
         $method = $dryRun ? 'count' : 'delete';
 
         return DB::table($childTable)
-                ->where($childFieldType, get_class($parentModel))
+                ->where($childFieldType, $parentModel->getMorphClass())
                 ->whereNotExists(function ($query) use (
                     $parentModel,
                     $childTable,
