@@ -5,6 +5,11 @@ namespace Cesargb\Database\Support;
 trait CascadeDelete
 {
     /**
+    * Initialize variable and allow for override.
+    */
+    protected array $cascadeDeleteMorph = [];
+    
+    /**
      * Boot the trait.
      *
      * Listen for the deleted event of a model, and run
@@ -26,7 +31,7 @@ trait CascadeDelete
      */
     public function getCascadeDeleteMorph()
     {
-        return (array) ($this->cascadeDeleteMorph ?? []);
+        return (array) ($this->cascadeDeleteMorph);
     }
 
     /**
