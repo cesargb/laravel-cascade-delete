@@ -1,5 +1,4 @@
-![tests](https://github.com/cesargb/laravel-cascade-delete/workflows/tests/badge.svg)
-[![StyleCI](https://github.styleci.io/repos/144183283/shield?branch=master)](https://github.styleci.io/repos/144183283)
+[![tests](https://github.com/cesargb/laravel-cascade-delete/actions/workflows/tests.yml/badge.svg)](https://github.com/cesargb/laravel-cascade-delete/actions/workflows/tests.yml)
 [![Quality Score](https://img.shields.io/scrutinizer/g/cesargb/laravel-cascade-delete.svg?style=flat-square)](https://scrutinizer-ci.com/g/cesargb/laravel-cascade-delete)
 [![Total Downloads](https://img.shields.io/packagist/dt/cesargb/laravel-cascade-delete.svg?style=flat-square)](https://packagist.org/packages/cesargb/laravel-cascade-delete)
 
