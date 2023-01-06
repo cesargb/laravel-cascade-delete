@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class MorphCleanCommandTest extends TestCase
 {
-    public function testMorphCleanCommand()
+    public function test_morph_clean_command()
     {
         factory(User::class, 2)
             ->create()
@@ -34,7 +34,7 @@ class MorphCleanCommandTest extends TestCase
         $this->assertNotNull(User::where('id', 2)->first()->image);
     }
 
-    public function testMorphCleanCommandWithDryRun()
+    public function test_morph_clean_command_with_dry_run()
     {
         factory(User::class, 2)
             ->create()

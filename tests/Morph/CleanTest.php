@@ -13,12 +13,12 @@ use Tests\Models\Video;
 
 class CleanTest extends TestCase
 {
-    public function testLoadModels()
+    public function test_load_models()
     {
-        $this->assertEquals(5, count((new MorphMock)->callGetCascadeDeleteModels()));
+        $this->assertEquals(5, count((new MorphMock())->callGetCascadeDeleteModels()));
     }
 
-    public function testCleanResidualMorphRelationsFromModelMorphOneWithoutLoad()
+    public function test_clean_residual_morph_relations_from_model_morph_one_without_load()
     {
         factory(User::class, 2)
             ->create()
@@ -31,14 +31,14 @@ class CleanTest extends TestCase
         $this->assertEquals(2, Image::count());
         $this->assertNotNull(User::first()->image);
 
-        $numRowsDeleted = (new Morph)->cleanResidualByModel(new User());
+        $numRowsDeleted = (new Morph())->cleanResidualByModel(new User());
 
         $this->assertEquals(1, $numRowsDeleted);
         $this->assertEquals(1, Image::count());
         $this->assertNotNull(User::where('id', 1)->first()->image);
     }
 
-    public function testCleanResidualMorphRelationsFromModelMorphOne()
+    public function test_clean_residual_morph_relations_from_model_morph_one()
     {
         factory(User::class, 2)
             ->create()
@@ -51,14 +51,14 @@ class CleanTest extends TestCase
         $this->assertEquals(2, Image::count());
         $this->assertNotNull(User::first()->image);
 
-        $numRowsDeleted = (new Morph)->cleanResidualByModel(new User());
+        $numRowsDeleted = (new Morph())->cleanResidualByModel(new User());
 
         $this->assertEquals(1, $numRowsDeleted);
         $this->assertEquals(1, Image::count());
         $this->assertNotNull(User::where('id', 2)->first()->image);
     }
 
-    public function testCleanResidualMorphRelationsFromModelMorphMany()
+    public function test_clean_residual_morph_relations_from_model_morph_many()
     {
         factory(Photo::class, 2)
             ->create()
@@ -71,14 +71,14 @@ class CleanTest extends TestCase
         $this->assertEquals(4, Option::count());
         $this->assertEquals(2, Photo::first()->options()->count());
 
-        $numRowsDeleted = (new Morph)->cleanResidualByModel(new Photo());
+        $numRowsDeleted = (new Morph())->cleanResidualByModel(new Photo());
 
         $this->assertEquals(2, $numRowsDeleted);
         $this->assertEquals(2, Option::count());
         $this->assertNotNull(2, Photo::where('id', 1)->first()->options()->count());
     }
 
-    public function testCleanResidualMorphRelationsFromModelMorphToMany()
+    public function test_clean_residual_morph_relations_from_model_morph_to_many()
     {
         factory(Tag::class, 2)->create();
 
@@ -92,14 +92,14 @@ class CleanTest extends TestCase
 
         $this->assertEquals(4, DB::table('taggables')->count());
 
-        $numRowsDeleted = (new Morph)->cleanResidualByModel(new Video());
+        $numRowsDeleted = (new Morph())->cleanResidualByModel(new Video());
 
         $this->assertEquals(2, $numRowsDeleted);
         $this->assertEquals(2, DB::table('taggables')->count());
         $this->assertEquals(2, Video::where('id', 1)->first()->tags()->count());
     }
 
-    public function testCleanResidualMorphRelations()
+    public function test_clean_residual_morph_relations()
     {
         factory(Tag::class, 2)->create();
 
@@ -113,7 +113,7 @@ class CleanTest extends TestCase
 
         $this->assertEquals(4, DB::table('taggables')->count());
 
-        (new Morph)->cleanResidualAllModels();
+        (new Morph())->cleanResidualAllModels();
 
         $this->assertEquals(2, DB::table('taggables')->count());
         $this->assertEquals(2, Video::where('id', 2)->first()->tags()->count());

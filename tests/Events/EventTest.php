@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class EventTest extends TestCase
 {
-    public function testRelationMorphFromModelWasCleaned()
+    public function test_relation_morph_from_model_was_cleaned()
     {
         Event::fake();
 
@@ -26,7 +26,7 @@ class EventTest extends TestCase
         $this->assertEquals(2, Image::count());
         $this->assertNotNull(User::first()->image);
 
-        (new Morph)->cleanResidualByModel(new User());
+        (new Morph())->cleanResidualByModel(new User());
 
         Event::assertDispatched(RelationMorphFromModelWasCleaned::class, 1);
         Event::assertDispatched(

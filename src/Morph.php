@@ -86,7 +86,7 @@ class Morph
 
         return array_map(
             function ($modelName) {
-                return new $modelName;
+                return new $modelName();
             },
             $this->getModelsNameWithCascadeDeleteTrait()
         );

@@ -7,7 +7,7 @@ use Tests\Models\User;
 
 class CascadeDeleteTest extends TestCase
 {
-    public function testBootCascadeDelete()
+    public function test_boot_cascade_delete()
     {
         factory(User::class, 2)
             ->create()
@@ -22,7 +22,7 @@ class CascadeDeleteTest extends TestCase
         $this->assertEquals(1, Image::count());
     }
 
-    public function testDeleteMorphResidual()
+    public function test_delete_morph_residual()
     {
         factory(User::class, 2)
             ->create()
@@ -34,7 +34,7 @@ class CascadeDeleteTest extends TestCase
 
         User::where('id', 1)->delete();
 
-        (new User)->deleteMorphResidual();
+        (new User())->deleteMorphResidual();
 
         $this->assertEquals(1, Image::count());
     }
