@@ -137,6 +137,8 @@ class Morph
         } elseif ($relation instanceof MorphToMany) {
             $table = $relation->getTable();
             $fieldId = $relation->getForeignPivotKeyName();
+        } else {
+            throw new \Exception('Invalid morph relation');
         }
 
         return [$table, $fieldType, $fieldId];
@@ -168,6 +170,10 @@ class Morph
      */
     protected function getValidMorphRelationsFromModel($model)
     {
+        if (! method_exists($model, 'getCascadeDeleteMorph')) {
+            return [];
+        }
+
         return array_filter(
             array_map(
                 function ($methodName) use ($model) {
@@ -191,7 +197,7 @@ class Morph
     protected function methodReturnedMorphRelation($model, $methodName)
     {
         if (! method_exists($model, $methodName)) {
-            return;
+            return false;
         }
 
         $relation = $model->$methodName();
@@ -213,7 +219,6 @@ class Morph
     /**
      * Load models with Cascade Delete.
      *
-     * @param  array|string  $path
      * @return void
      */
     protected function load()
