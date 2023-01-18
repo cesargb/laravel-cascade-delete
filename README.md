@@ -59,8 +59,8 @@ class Video extends Model
 }
 ```
 
-Now you can delete an `App\Video` record, and any associated `App\Image`, `App\Tag` and
-`App\Options` records will be deleted.
+Now you can delete an `App\Video` record, and any associated `App\Image`, `App\Options` and pivot records for
+`App\Tag` will be deleted.
 
 ## Delete Residuals
 
