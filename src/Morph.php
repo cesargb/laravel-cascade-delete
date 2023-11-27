@@ -115,9 +115,7 @@ class Morph
                 ) {
                     $query->select(DB::raw(1))
                             ->from($parentModel->getTable())
-                            ->whereRaw(
-                                $parentModel->getTable().'.'.$parentModel->getKeyName().' = '.$childTable.'.'.$childFieldId
-                            );
+                            ->whereColumn($parentModel->getTable() . '.' . $parentModel->getKeyName(), '=', $childTable . '.' . $childFieldId);
                 })->$method();
     }
 
