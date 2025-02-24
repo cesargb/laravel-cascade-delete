@@ -75,7 +75,7 @@ class CleanTest extends TestCase
 
         $this->assertEquals(2, $numRowsDeleted);
         $this->assertEquals(2, Option::count());
-        $this->assertNotNull(2, Photo::where('id', 1)->first()->options()->count());
+        $this->assertEquals(2, Photo::where('id', 1)->first()->options()->count());
     }
 
     public function test_clean_residual_morph_relations_from_model_morph_to_many()

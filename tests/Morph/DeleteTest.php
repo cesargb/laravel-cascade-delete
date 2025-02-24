@@ -22,7 +22,7 @@ class DeleteTest extends TestCase
             });
 
         $this->assertEquals(2, Image::count());
-        $this->assertNotNull(User::first()->image);
+        $this->assertNotNull(User::with('image')->first()->image);
 
         User::first()->delete();
 
@@ -38,12 +38,12 @@ class DeleteTest extends TestCase
             });
 
         $this->assertEquals(2, Image::count());
-        $this->assertNotNull(User::first()->image);
+        $this->assertNotNull(User::with('image')->first()->image);
 
         (new Morph())->delete(User::first());
 
         $this->assertEquals(1, Image::count());
-        $this->assertNull(User::first()->image);
+        $this->assertNull(User::with('image')->first()->image);
     }
 
     public function test_delete_morph_relations_from_record_model__morph_many()
