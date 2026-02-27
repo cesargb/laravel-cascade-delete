@@ -13,17 +13,17 @@
     "type": "library",
     "require": {
         "php": "^8.1",
-        "illuminate/console": "^10.0|^11.0|^12.0",
-        "illuminate/database": "^10.0|^11.0|^12.0",
-        "illuminate/events": "^10.0|^11.0|^12.0",
-        "illuminate/support": "^10.0|^11.0|^12.0"
+        "illuminate/console": "^10.0|^11.0|^12.0|^13.0",
+        "illuminate/database": "^10.0|^11.0|^12.0|^13.0",
+        "illuminate/events": "^10.0|^11.0|^12.0|^13.0",
+        "illuminate/support": "^10.0|^11.0|^12.0|^13.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.0|^10.5|^11.5.3",
-        "orchestra/testbench": "^8.0|^9.0|^10.0",
+        "phpunit/phpunit": "^9.0|^10.5|^11.5.3|^12.5.12",
+        "orchestra/testbench": "^8.0|^9.0|^10.0|^11.0",
         "laravel/legacy-factories": "^1.0.4",
         "friendsofphp/php-cs-fixer": "^3.13",
-        "larastan/larastan": "^2.0|^3.0"
+        "larastan/larastan": "^2.0|^3.0|dev-l13"
     },
     "autoload": {
         "psr-4": {
