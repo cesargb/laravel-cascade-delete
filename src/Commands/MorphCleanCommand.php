@@ -18,7 +18,7 @@ class MorphCleanCommand extends Command
     {
         $this->captureEvents();
 
-        if ((new Morph())->cleanResidualAllModels($this->option('dry-run')) === 0) {
+        if ((new Morph)->cleanResidualAllModels($this->option('dry-run')) === 0) {
             $this->info("\tIt's already cleaned");
         }
     }

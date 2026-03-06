@@ -33,7 +33,6 @@ class Morph
     /**
      * Clean residual polymorphic relationships from all Models.
      *
-     * @param  bool  $dryRun
      * @return int Num rows was deleted
      */
     public function cleanResidualAllModels(bool $dryRun = false)
@@ -51,7 +50,6 @@ class Morph
      * Clean residual polymorphic relationships from a Model.
      *
      * @param  Model  $model
-     * @param  bool  $dryRun
      * @return int Num rows was deleted
      */
     public function cleanResidualByModel($model, bool $dryRun = false)
@@ -86,7 +84,7 @@ class Morph
 
         return array_map(
             function ($modelName) {
-                return new $modelName();
+                return new $modelName;
             },
             $this->getModelsNameWithCascadeDeleteTrait()
         );
@@ -95,9 +93,7 @@ class Morph
     /**
      * Query to clean orphan morph table.
      *
-     * @param  Model  $parentModel
      * @param  MorphOneOrMany|MorphToMany  $relation
-     * @param  bool  $dryRun
      * @return int Num rows was deleted
      */
     protected function queryCleanOrphan(Model $parentModel, Relation $relation, bool $dryRun = false)
@@ -107,16 +103,16 @@ class Morph
         $method = $dryRun ? 'count' : 'delete';
 
         return DB::table($childTable)
-                ->where($childFieldType, $parentModel->getMorphClass())
-                ->whereNotExists(function ($query) use (
-                    $parentModel,
-                    $childTable,
-                    $childFieldId
-                ) {
-                    $query->select(DB::raw(1))
-                            ->from($parentModel->getTable())
-                            ->whereColumn($parentModel->getTable() . '.' . $parentModel->getKeyName(), '=', $childTable . '.' . $childFieldId);
-                })->$method();
+            ->where($childFieldType, $parentModel->getMorphClass())
+            ->whereNotExists(function ($query) use (
+                $parentModel,
+                $childTable,
+                $childFieldId
+            ) {
+                $query->select(DB::raw(1))
+                    ->from($parentModel->getTable())
+                    ->whereColumn($parentModel->getTable().'.'.$parentModel->getKeyName(), '=', $childTable.'.'.$childFieldId);
+            })->$method();
     }
 
     /**

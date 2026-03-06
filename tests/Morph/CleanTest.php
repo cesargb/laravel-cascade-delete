@@ -15,7 +15,7 @@ class CleanTest extends TestCase
 {
     public function test_load_models()
     {
-        $this->assertEquals(5, count((new MorphMock())->callGetCascadeDeleteModels()));
+        $this->assertEquals(5, count((new MorphMock)->callGetCascadeDeleteModels()));
     }
 
     public function test_clean_residual_morph_relations_from_model_morph_one_without_load()
@@ -31,7 +31,7 @@ class CleanTest extends TestCase
         $this->assertEquals(2, Image::count());
         $this->assertNotNull(User::first()->image);
 
-        $numRowsDeleted = (new Morph())->cleanResidualByModel(new User());
+        $numRowsDeleted = (new Morph)->cleanResidualByModel(new User);
 
         $this->assertEquals(1, $numRowsDeleted);
         $this->assertEquals(1, Image::count());
@@ -51,7 +51,7 @@ class CleanTest extends TestCase
         $this->assertEquals(2, Image::count());
         $this->assertNotNull(User::first()->image);
 
-        $numRowsDeleted = (new Morph())->cleanResidualByModel(new User());
+        $numRowsDeleted = (new Morph)->cleanResidualByModel(new User);
 
         $this->assertEquals(1, $numRowsDeleted);
         $this->assertEquals(1, Image::count());
@@ -71,7 +71,7 @@ class CleanTest extends TestCase
         $this->assertEquals(4, Option::count());
         $this->assertEquals(2, Photo::first()->options()->count());
 
-        $numRowsDeleted = (new Morph())->cleanResidualByModel(new Photo());
+        $numRowsDeleted = (new Morph)->cleanResidualByModel(new Photo);
 
         $this->assertEquals(2, $numRowsDeleted);
         $this->assertEquals(2, Option::count());
@@ -92,7 +92,7 @@ class CleanTest extends TestCase
 
         $this->assertEquals(4, DB::table('taggables')->count());
 
-        $numRowsDeleted = (new Morph())->cleanResidualByModel(new Video());
+        $numRowsDeleted = (new Morph)->cleanResidualByModel(new Video);
 
         $this->assertEquals(2, $numRowsDeleted);
         $this->assertEquals(2, DB::table('taggables')->count());
@@ -113,7 +113,7 @@ class CleanTest extends TestCase
 
         $this->assertEquals(4, DB::table('taggables')->count());
 
-        (new Morph())->cleanResidualAllModels();
+        (new Morph)->cleanResidualAllModels();
 
         $this->assertEquals(2, DB::table('taggables')->count());
         $this->assertEquals(2, Video::where('id', 2)->first()->tags()->count());

@@ -11,7 +11,5 @@ class BadModel2 extends Model
 
     protected $cascadeDeleteMorph = 'bad_method';
 
-    public function bad_method()
-    {
-    }
+    public function bad_method() {}
 }

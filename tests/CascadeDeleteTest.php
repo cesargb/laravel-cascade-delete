@@ -34,7 +34,7 @@ class CascadeDeleteTest extends TestCase
 
         User::where('id', 1)->delete();
 
-        (new User())->deleteMorphResidual();
+        (new User)->deleteMorphResidual();
 
         $this->assertEquals(1, Image::count());
     }

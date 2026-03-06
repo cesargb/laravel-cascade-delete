@@ -13,7 +13,7 @@ trait CascadeDelete
     protected static function bootCascadeDelete()
     {
         static::deleted(function ($model) {
-            $morph = new Morph();
+            $morph = new Morph;
 
             $morph->delete($model);
         });
@@ -33,11 +33,10 @@ trait CascadeDelete
      * Clean residual morph relation from a model. Return number
      * of deleted rows.
      *
-     * @param  bool  $dryRun
      * @return int
      */
     public function deleteMorphResidual(bool $dryRun = false)
     {
-        return (new Morph())->cleanResidualByModel($this, $dryRun);
+        return (new Morph)->cleanResidualByModel($this, $dryRun);
     }
 }

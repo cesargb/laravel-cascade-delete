@@ -17,11 +17,6 @@ class RelationMorphFromModelWasCleaned
 
     /**
      * Event dispach when clean relations morph from model.
-     *
-     * @param  Model  $model
-     * @param  Relation  $relation
-     * @param  int  $numDeleted
-     * @param  bool  $dryRun
      */
     public function __construct(Model $model, Relation $relation, int $numDeleted, bool $dryRun)
     {

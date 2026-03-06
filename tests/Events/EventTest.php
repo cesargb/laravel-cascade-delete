@@ -26,7 +26,7 @@ class EventTest extends TestCase
         $this->assertEquals(2, Image::count());
         $this->assertNotNull(User::first()->image);
 
-        (new Morph())->cleanResidualByModel(new User());
+        (new Morph)->cleanResidualByModel(new User);
 
         Event::assertDispatched(RelationMorphFromModelWasCleaned::class, 1);
         Event::assertDispatched(
