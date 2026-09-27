@@ -16,7 +16,7 @@ class Morph
     /**
      * Delete polymorphic relationships of the single records from Model.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param  Model  $model
      * @return void
      */
     public function delete($model)
@@ -76,7 +76,7 @@ class Morph
     /**
      * Get the classes that use the trait CascadeDelete.
      *
-     * @return \Illuminate\Database\Eloquent\Model[]
+     * @return Model[]
      */
     protected function getCascadeDeleteModels()
     {
@@ -159,7 +159,7 @@ class Morph
     /**
      * Fetch polymorphic relationships from a Model.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param  Model  $model
      * @return array
      */
     protected function getValidMorphRelationsFromModel($model)
@@ -184,7 +184,7 @@ class Morph
     /**
      * Verify if method of a Model return a polymorphic relationship.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param  Model  $model
      * @param  string  $methodName
      * @return bool
      */

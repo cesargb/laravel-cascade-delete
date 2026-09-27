@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 /**
- * @property ?\Tests\Models\Image $image
+ * @property ?Image $image
  */
 class User extends Model
 {
